@@ -7,18 +7,18 @@
 	<div class="top-bar">
 		<img src="../../Media/logo.svg" />
 		<h1>PEW</h1>
-		<button id="settings">settings</button>
+		<button id="settings" title="Open settings page">settings</button>
 		<h3>Photosensitive Epilepsy Warning</h3>
 	</div>
 
 	<label class="switch">
-		<i>Block all GIFs/videos</i>
-		<input type="checkbox" id="block-all" />
+		<i id="block-all-text">Block all GIFs/videos</i>
+		<input type="checkbox" id="block-all" aria-labeledby="block-all-text" />
 		<span />
 	</label>
 
 	<div class="button-container">
-		<button id="inject">Select videos</button>
+		<button id="inject" aria-labeledby="inject">Select videos</button>
 		<div />
 	</div>
 </body>
