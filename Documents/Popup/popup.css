@@ -6,7 +6,10 @@ body {
 	margin: 0;
 }
 
-
+::selection {
+	background-color: var(--primary-color);
+	color: var(--secondary-color-dark);
+}
 
 /* Top bar */
 
