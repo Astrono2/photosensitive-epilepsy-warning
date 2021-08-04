@@ -100,7 +100,7 @@ body {
 	width: 1.5rem;
 	background-color: var(--secondary-color);
 	border-radius: 100vw;
-	transition: transform 500ms;
+	transition: transform 500ms, background-color 500ms;
 }
 
 .switch:hover span::before {
