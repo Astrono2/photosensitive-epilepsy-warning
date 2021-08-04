@@ -6,6 +6,8 @@ body {
 	margin: 0;
 }
 
+
+
 /* Top bar */
 
 .top-bar {
@@ -81,6 +83,7 @@ body {
 	background-color: var(--darken-color);
 	border-radius: 100vw;
 	outline-color: var(--secondary-color-dark);
+	transition: background-color 500ms;
 }
 
 .switch:hover span {
@@ -154,20 +157,19 @@ body {
 	transform: translateY(-2px);
 }
 
-#inject + div {
+.button-container div {
 	position: absolute;
-	width: 10rem;
 	left: calc(50vw - 5rem);
+	right: calc(50vw - 5rem);
 	bottom: calc(1rem + 5px);
 	height: 10px;
 	background-color: black;
 	z-index: -1;
 	filter: blur(10px);
 	opacity: 0;
-	transition: opacity 500ms;
 }
 
-#inject:hover + div {
+#inject:hover ~ div {
 	opacity: 1;
 }
 
