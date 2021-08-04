@@ -1,0 +1,31 @@
+{
+	"name": "Photosensitive Epilepsy Watch",
+	"short_name": "PEW",
+	"description": "Protect yourself from flashing lights online.",
+	"version": "0.1",
+	"manifest_version": 3,
+	"icons": {
+		"16": "/Media/Icons/icon16.png",
+		"32": "/Media/Icons/icon32.png",
+		"48": "/Media/Icons/icon48.png",
+		"128": "/Media/Icons/icon128.png",
+		"256": "/Media/Icons/icon256.png"
+	},
+	"action": {
+		"default_popup": "/Documents/Popup/popup.html",
+		"default_icon": {
+    	  "16": "/Media/Icons/icon16.png",
+    	  "32": "/Media/Icons/icon32.png",
+    	  "48": "/Media/Icons/icon48.png",
+    	  "128": "/Media/Icons/icon128.png",
+    	  "256": "/Media/Icons/icon256.png"
+    	}
+	},
+	"background": {
+		"service_worker": "background_dummy.js"
+  	},
+	"permissions": [
+		"activeTab",
+		"scripting"
+	]
+}

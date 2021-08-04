@@ -1,0 +1,89 @@
+@import "../../master.css";
+
+body
+{
+	background-color: var(--secondary-color-dark);
+	color: white;
+}
+
+/* General settings */
+
+h1
+{
+	color: var(--primary-color);
+}
+
+.title
+{
+	display: flex;
+	align-items: center;
+}
+
+.title img
+{
+	width: 5em;
+	height: auto;
+	margin-right: 1em;
+	margin-left: 5%;
+}
+
+::selection
+{
+	background-color: var(--primary-color);
+	color: black;
+}
+
+.settings-box
+{
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: var(--secondary-color);
+	border-radius: 1em;
+	max-width: 800px;
+}
+
+.settings-box h2
+{
+	text-align: center;
+}
+
+.settings-box ul
+{
+	list-style-type: none;
+	padding: 0;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.settings-box li
+{
+	padding-bottom: 5px;
+	font-size: 1.5rem;
+}
+
+.settings-box li > *
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+.settings-input
+{
+	min-width: 2.5em;
+	max-width: 10em;
+	text-align: right;
+	overflow-x: hidden;
+	white-space: nowrap;
+	background-color: var(--darken-color);
+	border-radius: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.settings-input:focus
+{
+	outline-color: var(--primary-color);
+	outline-style: solid;
+	outline-width: 2px;
+}
+

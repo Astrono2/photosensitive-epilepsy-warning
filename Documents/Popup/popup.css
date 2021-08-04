@@ -1,0 +1,54 @@
+@import "../../master.css";
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+/* Top bar */
+
+.top-bar {
+	position: relative;
+	background-color: var(--secondary-color);
+	display: flex;
+	justify-content: space-between;
+	align-content: top;
+	padding-bottom: 1.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+	margin-top: -1em;
+	color: white;
+	border-bottom-left-radius: 33%;
+	border-bottom-right-radius: 33%;
+	margin-bottom: 1rem;
+}
+
+.top-bar img {
+	width: 2.5em;
+	height: auto;
+}
+
+.top-bar h1 {
+	padding-left: 2.5em;
+	padding-right: 2.5em;
+}
+
+.top-bar h3 {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 2.25em;
+	text-align: center;
+}
+
+.top-bar #settings {
+	font-family: "Material Icons";
+	font-size: 1.5rem;
+	color: var(--primary-color);
+	padding: 0;
+	height: 1em;
+	background: none;
+	border: none;
+	transform: translateY(0.75em);
+}
+
