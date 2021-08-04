@@ -64,6 +64,7 @@ body {
 	margin-right: 1em;
 	margin-bottom: 1em;
 	color: var(--secondary-color);
+	cursor: pointer;
 }
 
 .switch i {
@@ -79,7 +80,11 @@ body {
 	width: 3rem;
 	background-color: var(--darken-color);
 	border-radius: 100vw;
-	cursor: pointer;
+	outline-color: var(--secondary-color-dark);
+}
+
+.switch:hover span {
+	outline-offset: 2px;
 }
 
 .switch span::before {
@@ -109,6 +114,11 @@ body {
 	transform: translateX(1.5rem) scale(1.1);
 }
 
+.switch:focus-within span {
+	outline-style: dashed;
+	outline-width: 2px;
+}
+
 /* Button */
 
 .button-container {
@@ -132,13 +142,12 @@ body {
 
 	background-color: var(--primary-color);
 	color: white;
-	-webkit-text-stroke: 0.75px black;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 
 	cursor: pointer;
 
 	transition: transform 250ms;
 	transition-timing-function: ease-out;
-	display: inline-block;
 }
 
 #inject:hover {
@@ -159,6 +168,15 @@ body {
 }
 
 #inject:hover + div {
-	left: calc(50vw - 5rem);
 	opacity: 1;
+}
+
+#inject:focus {
+	outline-style: dashed;
+	outline-color: var(--secondary-color-dark);
+	outline-width: 2px;
+}
+
+#inject:active {
+	background-color: var(--primary-color-semi-dark);
 }
