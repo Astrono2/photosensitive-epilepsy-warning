@@ -24,8 +24,17 @@
 	"background": {
 		"service_worker": "background_dummy.js"
   	},
+  	"content_scripts": [
+  		{
+  			"matches": ["<all_urls>"],
+  			"js": ["/Scripts/content.js"],
+  			"css": ["/Documents/Inject/content.css"]
+  		}
+  	],
 	"permissions": [
 		"activeTab",
-		"scripting"
+		"scripting",
+		"storage",
+		"tabs"
 	]
 }

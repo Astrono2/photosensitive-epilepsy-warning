@@ -6,3 +6,9 @@
 	--secondary-color-dark: #440055;
 	--darken-color: #00000066;
 }
+
+.notransition,
+.notransition::before,
+.notransition::after {
+	transition: none !important;
+}
