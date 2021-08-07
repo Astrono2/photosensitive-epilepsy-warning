@@ -1,0 +1,70 @@
+.pew-selection-top {
+	position: fixed;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3rem;
+	background-color: var(--pew-secondary-color-dark);
+	z-index: 100000;
+	padding-right: 20px;
+}
+
+.pew-selection-darken {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 99998;
+}
+
+.pew-selection-top button {
+	color: white;
+	font-weight: bold;
+	margin-right: 15px;
+	background-color: var(--pew-secondary-color-dark);
+	height: 2rem;
+	border: none;
+	border-radius: 5px;
+	padding: 0.1em;
+}
+
+.pew-selection-top button:hover,
+.pew-selection-top button:focus {
+	background-color: var(--pew-secondary-color);
+}
+
+.pew-selection-clickables {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 99999;
+}
+
+.pew-selection-clickables button {
+	position: absolute;
+	background-color: var(--pew-primary-color);
+	opacity: 0;
+	border: none;
+}
+
+.pew-selection-clickables button:hover {
+	opacity: 0.3;
+}
+
+.pew-selection-clickables button.pew-video-selected {
+	opacity: 0.6;
+}
+
+.pew-selection-clickables button.pew-video-selected:hover {
+	opacity: 0.4;
+}
+
+.pew-video-overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 200000;
+	background-color: var(--pew-secondary-color);
+}

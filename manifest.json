@@ -35,5 +35,11 @@
 		"storage",
 		"tabs"
 	],
+	"web_accessible_resources": [
+		"master.css",
+		"Documents/Inject/content.css",
+		"Documents/Overlay/overlay.html",
+		"Documents/Overlay/overlay.css",
+		"Documents/Overlay/overlay.js"
 	]
 }
