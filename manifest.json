@@ -3,7 +3,7 @@
 	"short_name": "PEW",
 	"description": "Protect yourself from flashing lights online.",
 	"version": "0.1",
-	"manifest_version": 3,
+	"manifest_version": 2,
 	"icons": {
 		"16": "/Media/Icons/icon16.png",
 		"32": "/Media/Icons/icon32.png",
@@ -11,7 +11,7 @@
 		"128": "/Media/Icons/icon128.png",
 		"256": "/Media/Icons/icon256.png"
 	},
-	"action": {
+	"browser_action": {
 		"default_popup": "/Documents/Popup/popup.html",
 		"default_icon": {
     	  "16": "/Media/Icons/icon16.png",
@@ -27,14 +27,13 @@
   	"content_scripts": [
   		{
   			"matches": ["<all_urls>"],
-  			"js": ["/Scripts/content.js"],
-  			"css": ["/Documents/Inject/content.css"]
+  			"js": ["/Scripts/content.js"]
   		}
   	],
 	"permissions": [
 		"activeTab",
-		"scripting",
 		"storage",
 		"tabs"
+	],
 	]
 }

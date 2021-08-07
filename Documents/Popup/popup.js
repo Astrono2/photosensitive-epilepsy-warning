@@ -4,15 +4,17 @@ var tab;
 
 // Get the blocking state for the tab
 window.onload = async function() {
-	tab = (await chrome.tabs.query({active: true, currentWindow: true}))[0];
-	chrome.tabs.sendMessage(tab.id, {action: 'get_blocking_state'}, function(response) {
-		if(response) {
-			console.log(response.block);
-			blockAllSwitch.nextElementSibling.classList.add('notransition');
-			blockAllSwitch.checked = response.block === 'true' ? true : false;
-			blockAllSwitch.offsetHeight;
-			blockAllSwitch.nextElementSibling.classList.remove('notransition');
-		}
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		tab = tabs[0];
+		chrome.tabs.sendMessage(tab.id, {action: 'get_blocking_state'}, function(response) {
+			if(response) {
+				console.log(response.block);
+				blockAllSwitch.nextElementSibling.classList.add('notransition');
+				blockAllSwitch.checked = response.block === 'true' ? true : false;
+				blockAllSwitch.offsetHeight;
+				blockAllSwitch.nextElementSibling.classList.remove('notransition');
+			}
+		});
 	});
 }
 
