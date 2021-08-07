@@ -7,15 +7,15 @@ body {
 }
 
 ::selection {
-	background-color: var(--primary-color);
-	color: var(--secondary-color-dark);
+	background-color: var(--pew-primary-color);
+	color: var(--pew-secondary-color-dark);
 }
 
 /* Top bar */
 
 .top-bar {
 	position: relative;
-	background-color: var(--secondary-color);
+	background-color: var(--pew-secondary-color);
 	display: flex;
 	justify-content: space-between;
 	align-content: top;
@@ -50,7 +50,7 @@ body {
 .top-bar #settings {
 	font-family: "Material Icons";
 	font-size: 1.5rem;
-	color: var(--primary-color);
+	color: var(--pew-primary-color);
 	padding: 0;
 	height: 1em;
 	background: none;
@@ -68,7 +68,7 @@ body {
 	margin-left: 1em;
 	margin-right: 1em;
 	margin-bottom: 1em;
-	color: var(--secondary-color);
+	color: var(--pew-secondary-color);
 	cursor: pointer;
 }
 
@@ -83,9 +83,9 @@ body {
 .switch span {
 	height: 1.5rem;
 	width: 3rem;
-	background-color: var(--darken-color);
+	background-color: var(--pew-darken-color);
 	border-radius: 100vw;
-	outline-color: var(--secondary-color-dark);
+	outline-color: var(--pew-secondary-color-dark);
 	transition: background-color 500ms;
 }
 
@@ -98,7 +98,7 @@ body {
 	display: inline-block;
 	height: 1.5rem;
 	width: 1.5rem;
-	background-color: var(--secondary-color);
+	background-color: var(--pew-secondary-color);
 	border-radius: 100vw;
 	transition: transform 500ms, background-color 500ms;
 }
@@ -108,12 +108,12 @@ body {
 }
 
 .switch input:checked ~ span {
-	background-color: var(--primary-color-dark);
+	background-color: var(--pew-primary-color-dark);
 }
 
 .switch input:checked ~ span::before {
 	transform: translateX(1.5rem);
-	background-color: var(--primary-color);
+	background-color: var(--pew-primary-color);
 }
 
 .switch:hover input:checked ~ span::before {
@@ -146,7 +146,7 @@ body {
 	border-radius: 10px;
 	border-width: 1px;
 
-	background-color: var(--primary-color);
+	background-color: var(--pew-primary-color);
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 
@@ -178,10 +178,10 @@ body {
 
 #inject:focus {
 	outline-style: dashed;
-	outline-color: var(--secondary-color-dark);
+	outline-color: var(--pew-secondary-color-dark);
 	outline-width: 2px;
 }
 
 #inject:active {
-	background-color: var(--primary-color-semi-dark);
+	background-color: var(--pew-primary-color-semi-dark);
 }

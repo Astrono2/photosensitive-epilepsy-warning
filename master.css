@@ -1,10 +1,10 @@
 :root {
-	--primary-color: #FFFF00;
-	--primary-color-semi-dark: #EEEE00;
-	--primary-color-dark: #AAAA00;
-	--secondary-color: #663993;
-	--secondary-color-dark: #440055;
-	--darken-color: #00000066;
+	--pew-primary-color: #FFFF00;
+	--pew-primary-color-semi-dark: #EEEE00;
+	--pew-primary-color-dark: #AAAA00;
+	--pew-secondary-color: #663993;
+	--pew-secondary-color-dark: #440055;
+	--pew-darken-color: #00000066;
 }
 
 .notransition,
