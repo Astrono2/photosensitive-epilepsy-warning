@@ -1,19 +1,12 @@
-var selectionTopBar, selectionOverlay, selectionClickables;
-var contentCssLink, masterCssLink;
-var videoElements = [];
-var scanInterval;
 var mainContainer = document.body;
-var isSelecting = false;
-var selectedVideos = [];
 const svgns = "http://www.w3.org/2000/svg";
 
+/* VIDEO SELECTION */
 
-
-// Check for edge cases
-// Youtube places all of its stuff not inside body, but inside "ytd-app" for some god forsaken reason
-if(document.location.hostname === "www.youtube.com") {
-	mainContainer = document.getElementsByTagName('ytd-app')[0];
-}
+var selectionTopBar, selectionOverlay, selectionClickables;
+var isSelecting = false;
+var selectedVideos = [];
+var videoElements = [];
 
 // Create resize observers
 var videoOverlayResizeObserver = new ResizeObserver(entries => {
@@ -147,24 +140,6 @@ function setupSelection() {
 	}
 	mainContainer.appendChild(selectionTopBar);	
 
-	// Add stylesheets
-	let head = document.head;
-	if(!contentCssLink) {
-		contentCssLink = document.createElement('link');
-		contentCssLink.rel = 'stylesheet';
-		contentCssLink.type = 'text/css';
-		contentCssLink.href = chrome.runtime.getURL('Documents/Inject/content.css');
-	}
-	head.insertBefore(contentCssLink, head.firstChild);
-
-	if(!masterCssLink) {
-		masterCssLink = document.createElement('link');
-		masterCssLink.rel = 'stylesheet';
-		masterCssLink.type = 'text/css';
-		masterCssLink.href = chrome.runtime.getURL('master.css');
-	}
-	head.insertBefore(masterCssLink, head.firstChild);
-
 	// Add dark overlay
 	if(!selectionOverlay) {
 		selectionOverlay = document.createElementNS(svgns, 'svg');
@@ -202,9 +177,6 @@ function setupSelection() {
 
 	scanForVideos();
 
-	// Rescan every second for dynamically loaded videos
-	scanInterval = setInterval(scanForVideos, 1000);
-
 	// Observe mainContainer size changes
 	videoSelectingResizeObserver.observe(mainContainer);
 
@@ -239,10 +211,6 @@ function endSelection() {
 	// Clear video list
 	videoElements = [];
 
-	// Stop scanning for videos
-	clearInterval(scanInterval);
-	scanInterval = null;
-
 	// Clear masks children
 	selectionOverlay.getElementById('black-cutouts').textContent = '';
 
@@ -253,6 +221,28 @@ function endSelection() {
 	selectionClickables.textContent = '';
 }
 
+/* VIDEO BLOCKING */
+
+function blockVideos() {
+
+}
+
+/* GENERAL STUFF */
+
+// Inject stylesheets
+let contentCssLink = document.createElement('link');
+contentCssLink.rel = 'stylesheet';
+contentCssLink.type = 'text/css';
+contentCssLink.href = chrome.runtime.getURL('Documents/Inject/content.css');
+document.head.insertBefore(contentCssLink, document.head.firstChild);
+
+let masterCssLink = document.createElement('link');
+masterCssLink.rel = 'stylesheet';
+masterCssLink.type = 'text/css';
+masterCssLink.href = chrome.runtime.getURL('master.css');
+document.head.insertBefore(masterCssLink, document.head.firstChild);
+
+// Setup message listener
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		switch(request.action) {
@@ -267,3 +257,9 @@ chrome.runtime.onMessage.addListener(
 		}
 	}
 );
+
+// Check for edge cases
+// Youtube places all of its stuff not inside body, but inside "ytd-app" for some god forsaken reason
+if(document.location.hostname === "www.youtube.com") {
+	mainContainer = document.getElementsByTagName('ytd-app')[0];
+}
