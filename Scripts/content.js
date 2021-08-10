@@ -223,8 +223,66 @@ function endSelection() {
 
 /* VIDEO BLOCKING */
 
-function blockVideos() {
+var isBlocking = false;
 
+function captureVideoPoster(video) {
+	let canvas = document.createElement('canvas');
+	canvas.width = video.videoWidth;
+	canvas.height = video.videoHeight;
+	let canvasCtx = canvas.getContext('2d');
+	canvasCtx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+	return canvas.toDataURL('image/jpg', 0.5);
+}
+
+function blockVideos() {
+	for(let video of document.getElementsByTagName('video')) {
+		// Check if video is being analyzed
+		if(video.parentNode.querySelector('.pew-video-overlay')) continue;
+
+		// Get thumbnail from parent
+		let thumbnail = video.parentNode.querySelector('.pew-video-thumbnail');
+
+		// If thumbnail doesn't exist, create it
+		if(!thumbnail) {
+			thumbnail = document.createElement('div');
+			thumbnail.classList.add('pew-video-thumbnail');
+			video.parentNode.appendChild(thumbnail);
+			// Set video blocked text
+			let span = document.createElement('span');
+			span.innerHTML = 'This video has been blocked by PEW<br>' +
+							'Disable video blocking or analyze the video to unblock it.';
+			thumbnail.appendChild(span);
+		}
+
+		if(video.poster !== '') {
+			// If video has a default thumnail, use that
+			thumbnail.style.backgroundImage = 'url(' + video.poster + ')';
+		} else if(video.readyState !== 0) {
+			// Otherwise, if the video has already loaded, use a screenshot
+			thumbnail.style.backgroundImage = 'url(' + captureVideoPoster(video) + ')';
+		} else {
+			// If the video hasn't loaded, listen to the loadeddata event
+			video.onloadeddata = (self) => {
+				let thumbnail = self.target.parentNode.querySelector('.pew-video-thumbnail');
+				thumbnail.style.backgroundImage = 'url(' + captureVideoPoster(self.target) + ')';
+				// Pause and mute video
+				video.muted = true;
+				video.pause();
+			}
+		}
+
+
+		// Pause and mute video
+		video.muted = true;
+		video.pause();
+	}
+
+}
+
+function unblockVideos() {
+	for(let thumbnail of document.getElementsByClassName('pew-video-thumbnail')) {
+		thumbnail.parentNode.removeChild(thumbnail);
+	}
 }
 
 /* GENERAL STUFF */
@@ -247,13 +305,20 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		switch(request.action) {
 			case 'get_blocking_state':
-				sendResponse({block: localStorage.getItem('blocking_state')});
+				sendResponse({block: isBlocking});
 				break;
 			case 'set_blocking_state':
 				localStorage.setItem('blocking_state', request.block);
+				isBlocking = request.block;
+				if(request.block) {
+					blockVideos();
+				} else {
+					unblockVideos();
+				}
 				break;
 			case 'open_selection_context':
 				setupSelection();
+				break;
 		}
 	}
 );
@@ -266,5 +331,9 @@ if(document.location.hostname === "www.youtube.com") {
 
 // On document load, notify of the blocking state
 window.onload = function() {
-	chrome.runtime.sendMessage({action: 'set_blocking_state', block: localStorage.getItem('blocking_state')});
+	isBlocking = localStorage.getItem('blocking_state');
+	chrome.runtime.sendMessage({action: 'set_blocking_state', block: isBlocking});
+	if(isBlocking) {
+		blockVideos();
+	}
 }

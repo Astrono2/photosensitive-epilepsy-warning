@@ -61,10 +61,30 @@
 	opacity: 0.4;
 }
 
-.pew-video-overlay {
+.pew-video-overlay,
+.pew-video-thumbnail {
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 200000;
-	background-color: var(--pew-secondary-color);
+}
+
+.pew-video-overlay {
+	z-index: 200001;
+}
+
+.pew-video-thumbnail {
+	background-color: var(--pew-secondary-color-dark);
+	background-size: cover;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pew-video-thumbnail span {
+	color:  white;
+	font-weight: bold;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 5px;
 }
