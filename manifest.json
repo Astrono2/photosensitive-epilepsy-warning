@@ -27,7 +27,7 @@
   	"content_scripts": [
   		{
   			"matches": ["<all_urls>"],
-  			"js": ["/Scripts/content.js"]
+  			"js": ["/Scripts/mutationObserverUtil.js", "/Scripts/content.js"]
   		}
   	],
 	"permissions": [

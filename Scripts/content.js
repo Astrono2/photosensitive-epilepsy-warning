@@ -1,30 +1,12 @@
 var mainContainer = document.body;
 const svgns = "http://www.w3.org/2000/svg";
 
-/* VIDEO SELECTION */
+/* OBSERVERS */
 
-var selectionTopBar, selectionOverlay, selectionClickables;
-var isSelecting = false;
-var selectedVideos = [];
-var videoElements = [];
-
-// Create resize observers
-var videoOverlayResizeObserver = new ResizeObserver(entries => {
+var resizeObserver = new ResizeObserver(entries => {
 	for(let entry of entries) {
-		let parent = entry.target.parentNode;
-		let pewOverlay = parent.querySelector('.pew-video-overlay');
-		console.assert(pewOverlay, {videoElement: entry.target, error: 'Parent doesn\'t have PEW overlay.'});
-
-		pewOverlay.style.width = entry.contentRect.width + 'px';
-		pewOverlay.style.height = entry.contentRect.height + 'px';
-	}
-});
-
-var videoSelectingResizeObserver = new ResizeObserver(entries => {
-	let maskBlackRects = selectionOverlay.getElementById('black-cutouts');
-	for(let entry of entries) {
-		// If the main container was resized, adjust the overlay and mask
-		if(entry.target === mainContainer) {
+		// If the main container was resized and the user is selecting, adjust the overlay and mask
+		if(entry.target === mainContainer && isSelecting) {
 			let width = mainContainer.scrollWidth;
 			let height = mainContainer.scrollHeight;
 			let mask = selectionOverlay.getElementById('darken-mask');
@@ -42,25 +24,76 @@ var videoSelectingResizeObserver = new ResizeObserver(entries => {
 			continue;
 		}
 
-		// Otherwise, adjust the mask cutouts
+		// Check what overlays it has and resize appropriately
 		let video = entry.target;
-		let videoIdx = Array.from(videoElements).indexOf(video);
+		let parent = video.parentNode;
+		let pewOverlay = parent.querySelector('.pew-video-overlay');
+		let thumbnail = parent.querySelector('.pew-video-thumbnail');
+		if(pewOverlay) {
+			pewOverlay.style.width = video.scrollWidth + 'px';
+			pewOverlay.style.height = video.scrollHeight + 'px';
+		}
+		if(thumbnail) {
+			thumbnail.style.width = video.scrollWidth + 'px';
+			thumbnail.style.height = video.scrollHeight + 'px';
+		}
 
-		// Adjust mask rect
-		let maskRect = maskBlackRects.children['video-elem-' + videoIdx];
-		maskRect.setAttribute('x', entry.target.getBoundingClientRect().x + window.scrollX);
-		maskRect.setAttribute('y', entry.target.getBoundingClientRect().y + window.scrollY);
-		maskRect.setAttribute('width', video.scrollWidth);
-		maskRect.setAttribute('height', video.scrollHeight);
+		// If we are selecting, resize mask cutout and clickable
+		if(isSelecting) {
+			let videoIdx = Array.from(videoElements).indexOf(video);
+			let maskBlackRects = selectionOverlay.getElementById('black-cutouts');
 
-		// Adjust clickable rect
-		let videoButtonStyle = selectionClickables.children['video-elem-' + videoIdx].style;
-		videoButtonStyle.left = entry.target.getBoundingClientRect().x + window.scrollX + 'px';
-		videoButtonStyle.top = entry.target.getBoundingClientRect().y + window.scrollY + 'px';
-		videoButtonStyle.width = video.scrollWidth + 'px';
-		videoButtonStyle.height = video.scrollHeight + 'px';
+			// Adjust mask rect
+			let maskRect = maskBlackRects.children['video-elem-' + videoIdx];
+			maskRect.setAttribute('x', video.getBoundingClientRect().x + window.scrollX);
+			maskRect.setAttribute('y', video.getBoundingClientRect().y + window.scrollY);
+			maskRect.setAttribute('width', video.scrollWidth);
+			maskRect.setAttribute('height', video.scrollHeight);
+
+			// Adjust clickable rect
+			let videoButtonStyle = selectionClickables.children['video-elem-' + videoIdx].style;
+			videoButtonStyle.left = video.getBoundingClientRect().x + window.scrollX + 'px';
+			videoButtonStyle.top = video.getBoundingClientRect().y + window.scrollY + 'px';
+			videoButtonStyle.width = video.scrollWidth + 'px';
+			videoButtonStyle.height = video.scrollHeight + 'px';
+		}
 	}
 });
+
+var mutationObserver = new PewMutationObserver(mutations => {
+	for(let mutation of mutations) {
+		// If elements were added to the main container, check for new videos
+		if(mutation.target === mainContainer && mutation.type === 'childList') {
+			if(isSelecting) scanForVideos();
+			if(isBlocking) blockVideos();
+		}
+
+		// This check is redundant but is here for readability
+		if(mutation.type === 'attributes') {
+			// If the mutation wasn't on the main container, it can only be on a video
+			let video = mutation.target;
+			// Check what overlays it has and adjust appropriately
+			let parent = video.parentNode;
+			let pewOverlay = parent.querySelector('.pew-video-overlay');
+			let thumbnail = parent.querySelector('.pew-video-thumbnail');
+			if(pewOverlay) {
+				pewOverlay.style.top = video.style.top;
+				pewOverlay.style.left = video.style.left;
+			}
+			if(thumbnail) {
+				thumbnail.style.top = video.style.top;
+				thumbnail.style.left = video.style.left;
+			}
+		}
+	}
+});
+
+/* VIDEO SELECTION */
+
+var selectionTopBar, selectionOverlay, selectionClickables;
+var isSelecting = false;
+var selectedVideos = [];
+var videoElements = [];
 
 // Get video elements and update the mask and clickables
 function scanForVideos() {
@@ -82,7 +115,8 @@ function scanForVideos() {
 			maskBlackRects.removeChild(orphanVidRect);
 			let orphanVidButton = selectionClickables.getElementById('video-elem' + i);
 			selectionClickables.removeChild(orphanVidButton);
-			videoSelectingResizeObserver.unobserve(videoElements[i]);
+			resizeObserver.unobserve(videoElements[i]);
+			mutationObserver.unobserve(videoElements[i]);
 		}
 
 		// Create cutout rects for the overlay
@@ -111,9 +145,12 @@ function scanForVideos() {
 		}
 		selectionClickables.appendChild(vidButton);
 
-		// Observe the video for resize changes
-		videoSelectingResizeObserver.unobserve(newVideoElements[i]);
-		videoSelectingResizeObserver.observe(newVideoElements[i]);
+		// Unobserve before observing to prevent duplicates
+		resizeObserver.unobserve(newVideoElements[i]);
+		// Observe the video for rect changes
+		resizeObserver.observe(newVideoElements[i]);
+		mutationObserver.observe(newVideoElements[i]);
+
 		videoElements[i] = newVideoElements[i];
 	}
 }
@@ -177,8 +214,14 @@ function setupSelection() {
 
 	scanForVideos();
 
+	// Unobserve before observing to prevent duplicates
+	resizeObserver.unobserve(mainContainer);
+
 	// Observe mainContainer size changes
-	videoSelectingResizeObserver.observe(mainContainer);
+	resizeObserver.observe(mainContainer);
+
+	// Observe mainContainer subtree changes
+	mutationObserver.observe(mainContainer, {childList: true, subtree: true, attributes: true});
 
 	mainContainer.appendChild(selectionOverlay);
 	mainContainer.appendChild(selectionClickables);
@@ -191,7 +234,6 @@ function confirmSelection() {
 		overlay.classList.add('pew-video-overlay');
 		overlay.src = chrome.runtime.getURL('Documents/Overlay/overlay.html');
 		
-		videoOverlayResizeObserver.observe(selectedVideos[i]);
 		selectedVideos[i].parentNode.appendChild(overlay);
 	}
 	endSelection();
@@ -203,8 +245,11 @@ function endSelection() {
 	mainContainer.removeChild(selectionOverlay);
 	mainContainer.removeChild(selectionClickables);
 
-	// Unobserve resize for videos
-	videoSelectingResizeObserver.disconnect();
+	// Unobserve the main container for size changes
+	resizeObserver.unobserve(mainContainer);
+
+	// Only unobserve for tree changes if blocking is disabled
+	if(!isBlocking) mutationObserver.unobserve(mainContainer);
 
 	isSelecting = false;
 
@@ -271,18 +316,27 @@ function blockVideos() {
 			}
 		}
 
+		// Unobserve before observing to prevent duplicates
+		resizeObserver.unobserve(video);
+
+		resizeObserver.observe(video);
+		mutationObserver.observe(video, {childList: false, attributes: true});
 
 		// Pause and mute video
 		video.muted = true;
 		video.pause();
 	}
 
+	// Observe mainContainer for new videos
+	mutationObserver.observe(mainContainer, {childList: true, subtree: true, attributes: true});
 }
 
 function unblockVideos() {
 	for(let thumbnail of document.getElementsByClassName('pew-video-thumbnail')) {
 		thumbnail.parentNode.removeChild(thumbnail);
 	}
+	// Only unobserve mainContainer for new videos if not selecting
+	if(!isSelecting) mutationObserver.unobserve(mainContainer);
 }
 
 /* GENERAL STUFF */
