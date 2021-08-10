@@ -6,9 +6,9 @@ var tab;
 window.onload = async function() {
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		tab = tabs[0];
+		if(tab.status !== 'complete') return;
 		chrome.tabs.sendMessage(tab.id, {action: 'get_blocking_state'}, function(response) {
 			if(response) {
-				console.log(response.block);
 				blockAllSwitch.nextElementSibling.classList.add('notransition');
 				blockAllSwitch.checked = response.block === 'true' ? true : false;
 				blockAllSwitch.offsetHeight;
@@ -51,3 +51,18 @@ blockAllSwitch.onkeypress = function(self) {
 blockAllSwitch.onclick = function(self) {
 	chrome.tabs.sendMessage(tab.id, {action: 'set_blocking_state', block: self.target.checked});
 }
+
+/* ---------------------------------------------------------------- */
+
+chrome.runtime.onMessage.addListener(
+	function(request, sender, response) {
+		switch(request.action) {
+			case 'set_blocking_state':
+				blockAllSwitch.nextElementSibling.classList.add('notransition');
+				blockAllSwitch.checked = request.block === 'true' ? true : false;
+				blockAllSwitch.offsetHeight;
+				blockAllSwitch.nextElementSibling.classList.remove('notransition');
+				break;
+		}
+	}
+);

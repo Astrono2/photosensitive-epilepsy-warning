@@ -263,3 +263,8 @@ chrome.runtime.onMessage.addListener(
 if(document.location.hostname === "www.youtube.com") {
 	mainContainer = document.getElementsByTagName('ytd-app')[0];
 }
+
+// On document load, notify of the blocking state
+window.onload = function() {
+	chrome.runtime.sendMessage({action: 'set_blocking_state', block: localStorage.getItem('blocking_state')});
+}
