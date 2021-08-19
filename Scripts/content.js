@@ -1,24 +1,60 @@
 var mainContainer = document.body;
 const svgns = "http://www.w3.org/2000/svg";
 
+var PewVideo;
+import(chrome.runtime.getURL('/Scripts/pewVideo.js')).then(obj => {
+	PewVideo = obj.PewVideo;
+});
+
+/* VIDEO ANALYSIS */
+
+var analysisOverlays;
+
+var videoAnalysisResizeObserver = new ResizeObserver((entries, observer) => {
+	for(let entry of entries) {
+		let video = entry.target;
+		let pewVideo = pewVideos.get(video);
+		let [width, height] = [video.scrollWidth, video.scrollHeight];
+		let boundingRect = video.getBoundingClientRect();
+		let [x, y] = [boundingRect.x + scrollX, boundingRect.y + scrollY];
+
+		// If we observe a size change in a video with no overlay, stop observing it.
+		if(!pewVideo.isOverlayed) {
+			observer.unobserve(video);
+			continue;
+		}
+		pewVideo.analysisOverlay.style.width = width + 'px';
+		pewVideo.analysisOverlay.style.height = height + 'px';
+		pewVideo.analysisOverlay.style.left = x + 'px';
+		pewVideo.analysisOverlay.style.top = y + 'px';
+	}
+});
+
+function videoAnalysisCancel(event) {
+	let analysisOverlay = event.target.parentNode;
+	if(confirm('Are you sure you want to cancel the video analysis?')) {
+		analysisOverlay.parentNode.removeChild(analysisOverlay);
+	}
+}
+
+/* VIDEO DETECTION */
+
+// Associate videos with PewVideo objects
+var pewVideos = new Map();
+
+function scanForVideos() {
+	let videoElements = mainContainer.getElementsByTagName('video');
+	for(let video of videoElements) {
+		if(pewVideos.has(video)) continue;
+
+		pewVideos.set(video, new PewVideo(video));
+	}
+}
+
 /* VIDEO SELECTION */
 
 var selectionTopBar, selectionOverlay, selectionClickables;
 var isSelecting = false;
-var selectedVideos = [];
-var videoElements = [];
-
-// Create resize observers
-var videoOverlayResizeObserver = new ResizeObserver(entries => {
-	for(let entry of entries) {
-		let parent = entry.target.parentNode;
-		let pewOverlay = parent.querySelector('.pew-video-overlay');
-		console.assert(pewOverlay, {videoElement: entry.target, error: 'Parent doesn\'t have PEW overlay.'});
-
-		pewOverlay.style.width = entry.contentRect.width + 'px';
-		pewOverlay.style.height = entry.contentRect.height + 'px';
-	}
-});
 
 var videoSelectingResizeObserver = new ResizeObserver(entries => {
 	let maskBlackRects = selectionOverlay.getElementById('black-cutouts');
@@ -42,81 +78,24 @@ var videoSelectingResizeObserver = new ResizeObserver(entries => {
 			continue;
 		}
 
-		// Otherwise, adjust the mask cutouts
+		// Otherwise, adjust the mask cutout and clickable
 		let video = entry.target;
-		let videoIdx = Array.from(videoElements).indexOf(video);
+		let pewVideo = pewVideos.get(video);
+		let [width, height] = [video.scrollWidth, video.scrollHeight];
+		let boundingRect = video.getBoundingClientRect();
+		let [x, y] = [boundingRect.x + scrollX, boundingRect.y + scrollY];
 
-		// Adjust mask rect
-		let maskRect = maskBlackRects.children['video-elem-' + videoIdx];
-		maskRect.setAttribute('x', entry.target.getBoundingClientRect().x + window.scrollX);
-		maskRect.setAttribute('y', entry.target.getBoundingClientRect().y + window.scrollY);
-		maskRect.setAttribute('width', video.scrollWidth);
-		maskRect.setAttribute('height', video.scrollHeight);
+		pewVideo.selectionOverlayCutout.setAttribute('width', width);
+		pewVideo.selectionOverlayCutout.setAttribute('height', height);
+		pewVideo.selectionOverlayCutout.setAttribute('x', x);
+		pewVideo.selectionOverlayCutout.setAttribute('y', y);
 
-		// Adjust clickable rect
-		let videoButtonStyle = selectionClickables.children['video-elem-' + videoIdx].style;
-		videoButtonStyle.left = entry.target.getBoundingClientRect().x + window.scrollX + 'px';
-		videoButtonStyle.top = entry.target.getBoundingClientRect().y + window.scrollY + 'px';
-		videoButtonStyle.width = video.scrollWidth + 'px';
-		videoButtonStyle.height = video.scrollHeight + 'px';
+		pewVideo.selectionClickable.style.width = width + 'px';
+		pewVideo.selectionClickable.style.height = height + 'px';
+		pewVideo.selectionClickable.style.left = x + 'px';
+		pewVideo.selectionClickable.style.top = y + 'px';
 	}
 });
-
-// Get video elements and update the mask and clickables
-function scanForVideos() {
-	// Clear mask's black cutouts
-	var maskBlackRects = selectionOverlay.getElementById('black-cutouts');
-
-	// Loop through videos and get their rects
-	let newVideoElements = mainContainer.getElementsByTagName('video');
-	for (let i = 0; i < newVideoElements.length; i++) {
-		// Ignore videos that are being analized
-		if(newVideoElements[i].parentNode.querySelector('.pew-video-overlay')) {
-			continue;
-		}
-
-		if(videoElements[i] === newVideoElements[i]) {
-			continue;
-		} else if(i < videoElements.length) {
-			let orphanVidRect = selectionOverlay.getElementById('video-elem-' + i);
-			maskBlackRects.removeChild(orphanVidRect);
-			let orphanVidButton = selectionClickables.getElementById('video-elem' + i);
-			selectionClickables.removeChild(orphanVidButton);
-			videoSelectingResizeObserver.unobserve(videoElements[i]);
-		}
-
-		// Create cutout rects for the overlay
-		let vidRect = document.createElementNS(svgns, 'rect');
-		vidRect.setAttribute('id', 'video-elem-' + i);
-		vidRect.setAttribute('fill', 'black');
-		maskBlackRects.appendChild(vidRect);
-
-		// Create clickables
-		let vidButton = document.createElement('button');
-		vidButton.setAttribute('id', 'video-elem-' + i);
-		if(selectedVideos.includes(newVideoElements[i])) {
-			vidButton.classList.add('pew-video-selected');
-		}
-		vidButton.onclick = function(self) {
-			var videoIdx = parseInt(self.target.id.replace('video-elem-', ''));
-			var videoSelectedIdx = selectedVideos.indexOf(newVideoElements[videoIdx]);
-			// If videoSelected Idx is -1, then selectedVideos does not contain the video
-			if(videoSelectedIdx != -1) {
-				selectedVideos.splice(videoSelectedIdx, 1);
-				self.target.classList = [];
-			} else {
-				selectedVideos.push(newVideoElements[videoIdx]);
-				self.target.classList.add('pew-video-selected');
-			}
-		}
-		selectionClickables.appendChild(vidButton);
-
-		// Observe the video for resize changes
-		videoSelectingResizeObserver.unobserve(newVideoElements[i]);
-		videoSelectingResizeObserver.observe(newVideoElements[i]);
-		videoElements[i] = newVideoElements[i];
-	}
-}
 
 function setupSelection() {
 	if(isSelecting) return;
@@ -169,30 +148,40 @@ function setupSelection() {
 		mask.appendChild(blackRectsGroup);
 	}
 
-	// Add clickable inputs
+	// Add clickables container
 	if(!selectionClickables) {
 		selectionClickables = document.createElement('div');
 		selectionClickables.classList.add('pew-selection-clickables');
 	}
 
-	scanForVideos();
-
-	// Observe mainContainer size changes
-	videoSelectingResizeObserver.observe(mainContainer);
+	for(let [video, pewVideo] of pewVideos) {
+		if(pewVideo.isOverlayed) continue;
+		// Observe video for size changes
+		videoSelectingResizeObserver.observe(video);
+		// Add black cutout to the mask
+		selectionOverlay.getElementById('black-cutouts').appendChild(pewVideo.selectionOverlayCutout);
+		// Add clickable to the clickables container
+		selectionClickables.appendChild(pewVideo.selectionClickable);
+	}
 
 	mainContainer.appendChild(selectionOverlay);
 	mainContainer.appendChild(selectionClickables);
+
+	videoSelectingResizeObserver.observe(mainContainer);
 }
 
 function confirmSelection() {
-	for (var i = 0; i < selectedVideos.length; i++) {
-		// Add pete overlay to video
-		let overlay = document.createElement('iframe');
-		overlay.classList.add('pew-video-overlay');
-		overlay.src = chrome.runtime.getURL('Documents/Overlay/overlay.html');
-		
-		videoOverlayResizeObserver.observe(selectedVideos[i]);
-		selectedVideos[i].parentNode.appendChild(overlay);
+	if(!analysisOverlays) {
+		analysisOverlays = document.createElement('div');
+		analysisOverlays.classList.add('pew-analysis-overlays');
+		mainContainer.appendChild(analysisOverlays);
+	}
+	for(let [video, pewVideo] of pewVideos) {
+		if(pewVideo.selected) {
+			analysisOverlays.appendChild(pewVideo.analysisOverlay);
+			videoAnalysisResizeObserver.observe(video);
+			pewVideo.overlayCancelButton.onclick = videoAnalysisCancel;
+		}
 	}
 	endSelection();
 }
@@ -214,9 +203,6 @@ function endSelection() {
 	// Clear masks children
 	selectionOverlay.getElementById('black-cutouts').textContent = '';
 
-	// Clear selected videos
-	selectedVideos = [];
-
 	// Clear selection clickables
 	selectionClickables.textContent = '';
 }
@@ -235,54 +221,11 @@ function captureVideoPoster(video) {
 }
 
 function blockVideos() {
-	for(let video of document.getElementsByTagName('video')) {
-		// Check if video is being analyzed
-		if(video.parentNode.querySelector('.pew-video-overlay')) continue;
-
-		// Get thumbnail from parent
-		let thumbnail = video.parentNode.querySelector('.pew-video-thumbnail');
-
-		// If thumbnail doesn't exist, create it
-		if(!thumbnail) {
-			thumbnail = document.createElement('div');
-			thumbnail.classList.add('pew-video-thumbnail');
-			video.parentNode.appendChild(thumbnail);
-			// Set video blocked text
-			let span = document.createElement('span');
-			span.innerHTML = 'This video has been blocked by PEW<br>' +
-							'Disable video blocking or analyze the video to unblock it.';
-			thumbnail.appendChild(span);
-		}
-
-		if(video.poster !== '') {
-			// If video has a default thumnail, use that
-			thumbnail.style.backgroundImage = 'url(' + video.poster + ')';
-		} else if(video.readyState !== 0) {
-			// Otherwise, if the video has already loaded, use a screenshot
-			thumbnail.style.backgroundImage = 'url(' + captureVideoPoster(video) + ')';
-		} else {
-			// If the video hasn't loaded, listen to the loadeddata event
-			video.onloadeddata = (self) => {
-				let thumbnail = self.target.parentNode.querySelector('.pew-video-thumbnail');
-				thumbnail.style.backgroundImage = 'url(' + captureVideoPoster(self.target) + ')';
-				// Pause and mute video
-				video.muted = true;
-				video.pause();
-			}
-		}
-
-
-		// Pause and mute video
-		video.muted = true;
-		video.pause();
-	}
 
 }
 
 function unblockVideos() {
-	for(let thumbnail of document.getElementsByClassName('pew-video-thumbnail')) {
-		thumbnail.parentNode.removeChild(thumbnail);
-	}
+
 }
 
 /* GENERAL STUFF */
@@ -329,11 +272,14 @@ if(document.location.hostname === "www.youtube.com") {
 	mainContainer = document.getElementsByTagName('ytd-app')[0];
 }
 
-// On document load, notify of the blocking state
+// On document load, notify of the blocking state and scan for videos
 window.onload = function() {
-	isBlocking = localStorage.getItem('blocking_state');
+	// Notify popup of the blocking state
+	isBlocking = localStorage.getItem('blocking_state') === 'true';
 	chrome.runtime.sendMessage({action: 'set_blocking_state', block: isBlocking});
 	if(isBlocking) {
 		blockVideos();
 	}
+	// Scan for videos
+	scanForVideos();
 }

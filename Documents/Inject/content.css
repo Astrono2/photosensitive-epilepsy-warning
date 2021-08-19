@@ -1,3 +1,5 @@
+/* Selection */
+
 .pew-selection-top {
 	position: fixed;
 	display: flex;
@@ -8,7 +10,7 @@
 	right: 0;
 	height: 3rem;
 	background-color: var(--pew-secondary-color-dark);
-	z-index: 100000;
+	z-index: 10000000;
 	padding-right: 20px;
 }
 
@@ -42,49 +44,77 @@
 	z-index: 99999;
 }
 
-.pew-selection-clickables button {
+.pew-selection-clickables label {
 	position: absolute;
-	background-color: var(--pew-primary-color);
-	opacity: 0;
-	border: none;
 }
 
-.pew-selection-clickables button:hover {
-	opacity: 0.3;
-}
-
-.pew-selection-clickables button.pew-video-selected {
-	opacity: 0.6;
-}
-
-.pew-selection-clickables button.pew-video-selected:hover {
-	opacity: 0.4;
-}
-
-.pew-video-overlay,
-.pew-video-thumbnail {
+.pew-selection-clickables span {
 	position: absolute;
 	left: 0;
 	top: 0;
-	z-index: 200000;
+	width: 100%;
+	height: 100%;
+	background-color: var(--pew-primary-color);
+	opacity: 0;
 }
 
-.pew-video-overlay {
-	z-index: 200001;
+.pew-selection-clickables input {
+	opacity: 0;
 }
 
-.pew-video-thumbnail {
-	background-color: var(--pew-secondary-color-dark);
-	background-size: cover;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.pew-selection-clickables span:hover,
+.pew-selection-clickables input:focus + span {
+	opacity: 0.3;
 }
 
-.pew-video-thumbnail span {
-	color:  white;
+.pew-selection-clickables input:checked + span {
+	opacity: 0.6;
+}
+
+.pew-selection-clickables input:checked + span:hover,
+.pew-selection-clickables input:checked:focus + span {
+	opacity: 0.4;
+}
+
+/* Analysis */
+
+.pew-analysis-overlays {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+
+.pew-analysis-overlays div {
+	position: absolute;
+	background-color: var(--pew-secondary-color);
+	overflow: hidden;
+}
+
+.pew-analysis-overlays button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 2rem;
+	padding-left: 2rem;
+	border: none;
+	background-color: red;
+	border-bottom-left-radius: 10px;
+	font-size: 1.25rem;
 	font-weight: bold;
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 5px;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	transform: translateX(calc(100% - 2rem));
+	transition: transform 500ms;
+	cursor: pointer;
+}
+
+.pew-analysis-overlays button::before {
+	content: 'X';
+	position: absolute;
+	left: 0.655rem;
+}
+
+.pew-analysis-overlays button:hover {
+	transform: translateX(0);
 }

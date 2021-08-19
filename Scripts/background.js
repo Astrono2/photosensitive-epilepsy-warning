@@ -15,3 +15,14 @@ chrome.tabs.onUpdated.addListener(
 		}
 	}
 );
+
+chrome.tabs.onActivated.addListener(
+	function(activeInfo) {
+		let id = activeInfo.tabId;
+		chrome.tabs.get(id, function(tab) {
+			if (tab.url.startsWith('chrome://')) {
+				chrome.browserAction.disable(tab.id);
+			}
+		});
+	}
+);
