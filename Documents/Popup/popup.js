@@ -3,18 +3,11 @@ const blockAllSwitch = document.getElementById('block-all');
 var tab;
 
 // Get the blocking state for the tab
-window.onload = async function() {
+window.onload = function() {
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		tab = tabs[0];
 		if(tab.status !== 'complete') return;
-		chrome.tabs.sendMessage(tab.id, {action: 'get_blocking_state'}, function(response) {
-			if(response) {
-				blockAllSwitch.nextElementSibling.classList.add('notransition');
-				blockAllSwitch.checked = response.block === 'true' ? true : false;
-				blockAllSwitch.offsetHeight;
-				blockAllSwitch.nextElementSibling.classList.remove('notransition');
-			}
-		});
+		chrome.tabs.sendMessage(tab.id, {action: 'get_blocking_state'});
 	});
 }
 
@@ -56,10 +49,11 @@ blockAllSwitch.onclick = function(self) {
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, response) {
+		console.log(request);
 		switch(request.action) {
 			case 'set_blocking_state':
 				blockAllSwitch.nextElementSibling.classList.add('notransition');
-				blockAllSwitch.checked = request.block === 'true' ? true : false;
+				blockAllSwitch.checked = request.block;
 				blockAllSwitch.offsetHeight;
 				blockAllSwitch.nextElementSibling.classList.remove('notransition');
 				break;

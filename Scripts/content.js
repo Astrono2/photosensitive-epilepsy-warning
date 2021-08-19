@@ -248,7 +248,7 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		switch(request.action) {
 			case 'get_blocking_state':
-				sendResponse({block: isBlocking});
+				chrome.runtime.sendMessage({action: 'set_blocking_state', block: isBlocking});
 				break;
 			case 'set_blocking_state':
 				localStorage.setItem('blocking_state', request.block);
