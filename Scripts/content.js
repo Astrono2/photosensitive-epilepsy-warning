@@ -181,6 +181,7 @@ function confirmSelection() {
 			analysisOverlays.appendChild(pewVideo.analysisOverlay);
 			videoAnalysisResizeObserver.observe(video);
 			pewVideo.overlayCancelButton.onclick = videoAnalysisCancel;
+			pewVideo.overlayPewIcon.load();
 		}
 	}
 	endSelection();

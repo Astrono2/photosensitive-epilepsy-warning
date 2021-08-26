@@ -87,6 +87,9 @@
 
 .pew-analysis-overlays div {
 	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: var(--pew-secondary-color);
 	overflow: hidden;
 }
@@ -107,6 +110,7 @@
 	transform: translateX(calc(100% - 2rem));
 	transition: transform 500ms;
 	cursor: pointer;
+	z-index: 2;
 }
 
 .pew-analysis-overlays button::before {
@@ -117,4 +121,8 @@
 
 .pew-analysis-overlays button:hover {
 	transform: translateX(0);
+}
+
+.pew-analysis-overlays video {
+	transform: translateY(-2rem);
 }

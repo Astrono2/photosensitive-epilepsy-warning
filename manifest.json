@@ -38,6 +38,8 @@
 	"web_accessible_resources": [
 		"master.css",
 		"Documents/Inject/content.css",
-		"Scripts/pewVideo.js"
+		"Scripts/pewVideo.js",
+		"Media/logo_analysis.webm",
+		"Media/logo_analysis_cors.webm"
 	]
 }

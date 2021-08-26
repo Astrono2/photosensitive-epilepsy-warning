@@ -74,11 +74,23 @@ export class PewVideo {
 		let cancelButton = document.createElement('button');
 		cancelButton.textContent = 'Cancel';
 		// Create PEW eye icon, to show loading and convey the result
-		let pewIcon = document.createElementNS(svgns, 'svg');
-		pewIcon.src = chrome.runtime.getURL('Media/logo.svg'); // TODO: animate
-		
+		let pewIcon = document.createElement('video');
+		pewIcon.width = 300;
+		pewIcon.height = 300;
+		pewIcon.autoplay = true;
+		if(!this.isCrossOrigin) {
+			pewIcon.src = chrome.runtime.getURL('Media/logo_analysis.webm');
+			pewIcon.loop = true;
+		} else {
+			pewIcon.src = chrome.runtime.getURL('Media/logo_analysis_cors.webm');
+		}
+
 		this.analysisOverlay.appendChild(cancelButton);
 		this.analysisOverlay.appendChild(pewIcon);
+	}
+
+	startAnalysis() {
+
 	}
 
 	get selected() {
@@ -87,6 +99,10 @@ export class PewVideo {
 
 	get overlayCancelButton() {
 		return this.analysisOverlay.querySelector('button');
+	}
+
+	get overlayPewIcon() {
+		return this.analysisOverlay.querySelector('video');
 	}
 
 	get isOverlayed() {
