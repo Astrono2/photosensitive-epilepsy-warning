@@ -97,6 +97,10 @@ export class PewVideo {
 		return this.selectionClickable.querySelector('input').checked;
 	}
 
+	set selected(val) {
+		this.selectionClickable.querySelector('input').checked = val;
+	}
+
 	get overlayCancelButton() {
 		return this.analysisOverlay.querySelector('button');
 	}

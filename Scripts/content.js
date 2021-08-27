@@ -178,6 +178,7 @@ function confirmSelection() {
 	}
 	for(let [video, pewVideo] of pewVideos) {
 		if(pewVideo.selected) {
+			pewVideo.selected = false;
 			analysisOverlays.appendChild(pewVideo.analysisOverlay);
 			videoAnalysisResizeObserver.observe(video);
 			pewVideo.overlayCancelButton.onclick = videoAnalysisCancel;
