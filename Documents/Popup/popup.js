@@ -1,5 +1,6 @@
 const injectBtn = document.getElementById('inject');
 const blockAllSwitch = document.getElementById('block-all');
+const settingsBtn = document.getElementById('settings');
 var tab;
 
 // Get the blocking state for the tab
@@ -43,6 +44,12 @@ blockAllSwitch.onkeypress = function(self) {
 
 blockAllSwitch.onclick = function(self) {
 	chrome.tabs.sendMessage(tab.id, {action: 'set_blocking_state', block: self.target.checked});
+}
+
+/* ---------------------------------------------------------------- */
+
+settingsBtn.onclick = function(self) {
+	chrome.runtime.openOptionsPage();
 }
 
 /* ---------------------------------------------------------------- */

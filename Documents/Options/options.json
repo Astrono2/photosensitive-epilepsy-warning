@@ -1,0 +1,21 @@
+{
+	"options": [
+		{
+			"title": "General settings",
+			"items": [
+				{
+					"title": "Selection overlay opacity",
+					"type": "slider",
+					"range": [0,100],
+					"suffix": "%",
+					"value": 75
+				},
+				{
+					"title": "Block videos by default",
+					"type": "bool",
+					"value": false
+				}
+			]
+		}
+	]
+}

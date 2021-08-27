@@ -4,6 +4,7 @@
 	"description": "Protect yourself from flashing lights online.",
 	"version": "0.1",
 	"manifest_version": 2,
+	"options_page": "/Documents/Options/options.html",
 	"icons": {
 		"16": "/Media/Icons/icon16.png",
 		"32": "/Media/Icons/icon32.png",

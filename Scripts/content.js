@@ -269,11 +269,28 @@ if(document.location.hostname === "www.youtube.com") {
 // On document load, notify of the blocking state and scan for videos
 window.onload = function() {
 	// Notify popup of the blocking state
-	isBlocking = localStorage.getItem('blocking_state') === 'true';
-	chrome.runtime.sendMessage({action: 'set_blocking_state', block: isBlocking});
-	if(isBlocking) {
-		blockVideos();
+	isBlocking = localStorage.getItem('blocking_state');
+	if(isBlocking === null) {
+		chrome.storage.sync.get(['options'], (response) => {
+			chrome.runtime.sendMessage({
+				action: 'set_blocking_state',
+				block: response.options[0].items[1].value
+			});
+			isBlocking = response.options[0].items[1].value;
+			console.log(isBlocking);
+			if(isBlocking) {
+				blockVideos();
+			}
+			localStorage.setItem('blocking_state', isBlocking);
+		});
+	} else {
+		isBlocking = isBlocking === 'true';
+		chrome.runtime.sendMessage({action: 'set_blocking_state', block: isBlocking});
+		if(isBlocking) {
+			blockVideos();
+		}
 	}
+	
 	// Scan for videos
 	scanForVideos();
 }

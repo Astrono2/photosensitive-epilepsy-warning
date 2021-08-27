@@ -185,3 +185,13 @@ body {
 #inject:active {
 	background-color: var(--pew-primary-color-semi-dark);
 }
+
+/* Settings */
+
+#settings {
+	transition: transform 500ms;
+}
+
+#settings:hover {
+	transform: translateY(0.7em) rotate(45deg);
+}

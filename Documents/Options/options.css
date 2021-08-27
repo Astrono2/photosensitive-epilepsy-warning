@@ -45,6 +45,7 @@ h1
 .settings-box h2
 {
 	text-align: center;
+	font-size: 2rem;
 }
 
 .settings-box ul
@@ -87,3 +88,125 @@ h1
 	outline-width: 2px;
 }
 
+/* Bool settings */
+
+.settings-bool
+{
+	cursor: pointer;
+}
+
+.settings-bool:focus
+{
+	outline: none;
+}
+
+.settings-bool input
+{
+	opacity: 0;
+	z-index: -1;
+}
+
+.settings-bool span
+{
+	width: 2.5em;
+	height: 1.25em;
+	background-color: var(--pew-darken-color);
+	border-radius: 100vw;
+	position: relative;
+	transition: 0.5s;
+}
+
+.settings-bool span::after
+{
+	content: '';
+	position: absolute;
+	height: 1.25em;
+	width: 1.25em;
+	background-color: var(--pew-darken-color);
+	border-radius: 100vw;
+	transition: 0.5s;
+}
+
+.settings-bool input:checked + span
+{
+	background-color: var(--pew-primary-color-dark);
+}
+
+.settings-bool input:checked + span::after
+{
+	transform: translateX(1.25em);
+	background-color: var(--pew-primary-color);
+}
+
+.settings-bool:hover span
+{
+	transform: scale(1.2);
+}
+
+.settings-bool input:focus + span
+{
+	outline-color: var(--pew-primary-color);
+	outline-style: solid;
+	outline-width: 2px;
+}
+
+/* Slider settings */
+
+
+.slider-container
+{
+	width: 10em;
+	display: flex;
+	justify-content: right;
+	align-items: center;
+}
+
+.slider-container input
+{
+	appearance: none;
+	-webkit-appearance: none;
+	width: 100%;
+	height: 0.5em;
+	margin-right: 5px;
+	background-color: var(--pew-darken-color);
+	border-radius: 100vw;
+}
+
+.slider-container input:focus
+{
+	outline: none;
+	outline-color: var(--pew-primary-color);
+	outline-style: solid;
+	outline-width: 1px;
+}
+
+.slider-container input::-webkit-slider-thumb
+{
+	-webkit-appearance: none;
+	border: none;
+	width: 1em;
+	height: 1em;
+	border-radius: 100vw;
+	background-color: var(--pew-primary-color);
+	transition: transform 0.25s;
+}
+
+.slider-container input::-moz-range-thumb
+{
+	appearance: none;
+	border: none;
+	width: 1em;
+	height: 1em;
+	border-radius: 100vw;
+	background-color: var(--pew-primary-color);
+	transition: transform 0.25s;
+}
+
+.slider-container:hover input::-webkit-slider-thumb
+{
+	transform: scale(1.2);
+}
+.slider-container:hover input::-moz-range-thumb
+{
+	transform: scale(1.2);
+}

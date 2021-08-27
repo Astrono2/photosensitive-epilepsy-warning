@@ -26,3 +26,12 @@ chrome.tabs.onActivated.addListener(
 		});
 	}
 );
+
+// Set options on install
+chrome.runtime.onInstalled.addListener(function() {
+	fetch(chrome.runtime.getURL('Documents/Options/options.json'))
+		.then(response => response.json())
+		.then((json) => {
+			chrome.storage.sync.set(json);
+		});
+});
