@@ -30,13 +30,6 @@ var videoAnalysisResizeObserver = new ResizeObserver((entries, observer) => {
 	}
 });
 
-function videoAnalysisCancel(event) {
-	let analysisOverlay = event.target.parentNode;
-	if(confirm('Are you sure you want to cancel the video analysis?')) {
-		analysisOverlay.parentNode.removeChild(analysisOverlay);
-	}
-}
-
 /* VIDEO DETECTION */
 
 // Associate videos with PewVideo objects
@@ -181,7 +174,6 @@ function confirmSelection() {
 			pewVideo.selected = false;
 			analysisOverlays.appendChild(pewVideo.analysisOverlay);
 			videoAnalysisResizeObserver.observe(video);
-			pewVideo.overlayCancelButton.onclick = videoAnalysisCancel;
 			pewVideo.overlayPewIcon.load();
 		}
 	}

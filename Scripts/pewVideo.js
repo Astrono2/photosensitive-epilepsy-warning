@@ -73,6 +73,7 @@ export class PewVideo {
 		// Create button to cancel analysis
 		let cancelButton = document.createElement('button');
 		cancelButton.textContent = 'Cancel';
+		cancelButton.onclick = this.onCancelButtonPressed.bind(this);
 		// Create PEW eye icon, to show loading and convey the result
 		let pewIcon = document.createElement('video');
 		pewIcon.width = 300;
@@ -88,9 +89,22 @@ export class PewVideo {
 		this.analysisOverlay.appendChild(cancelButton);
 		this.analysisOverlay.appendChild(pewIcon);
 	}
+	/*-----------------------------------------------------------------*/
+
+	onCancelButtonPressed() {
+		if(confirm('Are you sure you want to cancel the video analysis?')) {
+			this.analysisOverlay.parentNode.removeChild(this.analysisOverlay);
+			this.stopAnalysis();
+		}
+	}
+
+	/*-----------------------------------------------------------------*/
 
 	startAnalysis() {
 
+	}
+
+	stopAnalysis() {
 	}
 
 	get selected() {
