@@ -120,7 +120,14 @@ function setupSelection() {
 		// Add rect
 		let rect = document.createElementNS(svgns, 'rect');
 		rect.setAttribute('id', 'darken-rect');
-		rect.setAttribute('fill', '#00000088'); // TEMPORARY!!!
+		rect.setAttribute('fill', '#000000');
+		// Set rect opacity from options
+		function setRectOpacity(optionsJson) {
+			const general = optionsJson.options.find(element => element.title == "General settings");
+			const opacity = general.items.find(element => element.title == "Selection overlay opacity");
+			this.style.opacity = opacity.value / 100;
+		}
+		chrome.storage.sync.get(['options'], setRectOpacity.bind(rect));
 		selectionOverlay.appendChild(rect);
 
 		// Add mask
