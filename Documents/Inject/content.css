@@ -124,5 +124,16 @@
 }
 
 .pew-analysis-overlays video {
-	transform: translateY(-2rem);
+	transform: translateY(-25%);
+	width: 30%;
+	height: auto;
+}
+
+.pew-analysis-overlays label {
+	position: absolute;
+	top: 60%;
+	font-size: 1.75rem;
+	color: var(--pew-primary-color);
+	font-weight: bold;
+	text-align: center;
 }

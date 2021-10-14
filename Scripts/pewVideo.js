@@ -79,15 +79,21 @@ export class PewVideo {
 		pewIcon.width = 300;
 		pewIcon.height = 300;
 		pewIcon.autoplay = true;
+		// Create label for extra info
+		let label = document.createElement('label');
+
 		if(!this.isCrossOrigin) {
 			pewIcon.src = chrome.runtime.getURL('Media/logo_analysis.webm');
 			pewIcon.loop = true;
+			label.textContent = 'Analyzing...';
 		} else {
 			pewIcon.src = chrome.runtime.getURL('Media/logo_analysis_cors.webm');
+			label.textContent = 'Sorry, this video can\'t be analyzed';
 		}
 
 		this.analysisOverlay.appendChild(cancelButton);
 		this.analysisOverlay.appendChild(pewIcon);
+		this.analysisOverlay.appendChild(label);
 	}
 	/*-----------------------------------------------------------------*/
 
