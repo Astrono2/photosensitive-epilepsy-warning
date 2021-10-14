@@ -272,12 +272,13 @@ window.onload = function() {
 	isBlocking = localStorage.getItem('blocking_state');
 	if(isBlocking === null) {
 		chrome.storage.sync.get(['options'], (response) => {
+			const general = response.options.find(element => element.title == "General settings");
+			const blocking = general.items.find(element => element.title == "Block videos by default");
+			isBlocking = blocking.value;
 			chrome.runtime.sendMessage({
 				action: 'set_blocking_state',
-				block: response.options[0].items[1].value
+				block: isBlocking
 			});
-			isBlocking = response.options[0].items[1].value;
-			console.log(isBlocking);
 			if(isBlocking) {
 				blockVideos();
 			}
