@@ -4,6 +4,7 @@
 body {
 	padding: 0;
 	margin: 0;
+	font-family: 'Nunito';
 }
 
 ::selection {
@@ -184,6 +185,11 @@ body {
 
 #inject:active {
 	background-color: var(--pew-primary-color-semi-dark);
+}
+
+#inject::selection {
+	background-color: var(--pew-secondary-color);
+	color: var(--pew-primary-color);
 }
 
 /* Settings */
