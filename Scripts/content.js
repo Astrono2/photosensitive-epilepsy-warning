@@ -32,8 +32,16 @@ var videoAnalysisResizeObserver = new ResizeObserver((entries, observer) => {
 
 /* VIDEO DETECTION */
 
+// For security, prevent prevent resetting existing keys
+let map = new Map();
+map.set = function(key, val) {
+	if(this.has(key)) return;
+	let _set = this.__proto__.set.bind(this);
+	_set(key, val);
+}
+
 // Associate videos with PewVideo objects
-var pewVideos = new Map();
+const pewVideos = Object.freeze(map);
 
 function scanForVideos() {
 	let videoElements = mainContainer.getElementsByTagName('video');

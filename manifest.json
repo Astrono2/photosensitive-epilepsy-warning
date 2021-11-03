@@ -41,6 +41,8 @@
 		"Documents/Inject/content.css",
 		"Scripts/pewVideo.js",
 		"Media/logo_analysis.webm",
-		"Media/logo_analysis_cors.webm"
+		"Media/logo_analysis_cors.webm",
+		"Media/logo_analysis_bad.webm",
+		"Media/logo_analysis_good.webm"
 	]
 }

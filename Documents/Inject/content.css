@@ -98,7 +98,7 @@
 	overflow: hidden;
 }
 
-.pew-analysis-overlays button {
+.pew-analysis-overlays .cancel-button {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -117,13 +117,13 @@
 	z-index: 2;
 }
 
-.pew-analysis-overlays button::before {
+.pew-analysis-overlays .cancel-button::before {
 	content: 'X';
 	position: absolute;
 	left: 0.655rem;
 }
 
-.pew-analysis-overlays button:hover {
+.pew-analysis-overlays .cancel-button:hover {
 	transform: translateX(0);
 }
 
@@ -145,4 +145,23 @@
 .pew-analysis-overlays label::selection {
 	background-color: var(--pew-primary-color);
 	color: var(--pew-secondary-color-dark);
+}
+
+.pew-analysis-overlays .continue {
+	position: absolute;
+	top: 75%;
+	font-size: 2rem;
+	font-weight: bold;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+	padding: 0.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+	color: white;
+}
+
+.pew-analysis-overlays .continue:hover,
+.pew-analysis-overlays .continue:focus {
+	filter: brightness(1.1);
 }
