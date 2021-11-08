@@ -1,13 +1,12 @@
 export class PewVideo {
 	video; // Reference to the associated video
 
-
 	selectionOverlayCutout; // Rect
 	selectionClickable; // Label
 	blockingOverlay; // Div
 	analysisOverlay; // Div
 
-	analysisWorker; // Worker
+	analysisPortUid; // Int
 	analysisCanvas; // Canvas
 
 	isCrossOrigin; // Boolean
@@ -17,6 +16,7 @@ export class PewVideo {
 	contentRemoveOverlay; // Method
 
 	isSafe; // Bool
+	isAnalyzing; // Bool
 
 	constructor(video) {
 		this.video = video;
@@ -29,6 +29,8 @@ export class PewVideo {
 
 		// Just in case
 		this.isSafe = false;
+
+		this.isAnalyzing = false;
 
 		this.makeOverlays();
 	}
@@ -173,11 +175,71 @@ export class PewVideo {
 	}
 
 	startAnalysis() {
+		chrome.runtime.sendMessage({action: 'get_native_port'}, (uid) => {
+			this.analysisPortUid = uid;
 
+			let metadata_message = '';
+			metadata_message += this.video.videoWidth.toString(16);
+			metadata_message += ',';
+			metadata_message += this.video.videoHeight.toString(16);
+			metadata_message += ',';
+			metadata_message += (30).toString(16); // fps
+			metadata_message += ',';
+			metadata_message += 't'; // has alpha = true
+
+			chrome.runtime.sendMessage({
+				action: 'send_native_message',
+				uid: this.analysisPortUid,
+				message: metadata_message
+			});
+
+			this.video.pause();
+			this.video.currentTime = 0;
+			this.sendFrame();
+			this.isAnalyzing = true;
+		});
 	}
 
 	stopAnalysis() {
+		chrome.runtime.sendMessage({
+			action: 'remove_native_port',
+			uid: this.analysisPortUid
+		});
+		this.video.currentTime = 0;
+		this.video.pause();
+		this.isAnalyzing = false;
+	}
 
+	sendFrame() {
+		let video = this.video;
+		let ctx = this.analysisCanvas.getContext('2d');
+		ctx.drawImage(video, 0, 0);
+		let frame = ctx.getImageData(0,0,video.videoWidth,video.videoHeight).data;
+		frame = Array.from(frame);
+		// VERY SLOW
+		// TODO: put in worker and optimize
+		frame.forEach((elem, idx, arr) => {arr[idx] = elem.toString(16)});
+		chrome.runtime.sendMessage({
+			action: 'send_native_message',
+			uid: this.analysisPortUid,
+			message: frame.toString()
+		});
+		video.currentTime += 1/30;
+	}
+
+	onMessage(message) {
+		if(!this.isAnalyzing) return;
+		if(message === 2) {
+			if(this.video.currentTime < this.video.duration) {
+				this.sendFrame();
+			} else {
+				this.stopAnalysis();
+				this.finishedAnalyzing(true);
+			}
+		} else {
+			this.stopAnalysis();
+			this.finishedAnalyzing(false);
+		}
 	}
 
 	get selected() {

@@ -190,6 +190,7 @@ function confirmSelection() {
 			analysisOverlays.appendChild(pewVideo.analysisOverlay);
 			videoAnalysisResizeObserver.observe(video);
 			pewVideo.overlayPewIcon.load();
+			pewVideo.startAnalysis();
 		}
 	}
 	endSelection();
@@ -270,6 +271,13 @@ chrome.runtime.onMessage.addListener(
 				break;
 			case 'open_selection_context':
 				setupSelection();
+				break;
+			case 'pass_message':
+				for(let pewVideo of pewVideos.values()) {
+					if(pewVideo.analysisPortUid === request.uid) {
+						pewVideo.onMessage(request.message);
+					}
+				}
 				break;
 		}
 	}
