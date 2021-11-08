@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
+
+body {
+	--purple-dark: #663993;
+	--light-pink: #ECD3FF;
+	--org-color: #3DAEE9;
+	--info-color: #F992DC;
+	--about-us: #FEEC4A;
+}

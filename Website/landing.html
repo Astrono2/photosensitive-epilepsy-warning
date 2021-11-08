@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PEW</title>
+	<link rel="stylesheet" type="text/css" href="master.css">
+	<link rel="stylesheet" type="text/css" href="landing.css">
+</head>
+<body>
+	<div class="top">
+		<div class="title-bubble">
+			<h1>PEW</h1>
+			<p>Photosensitive Epilepsy Warning</p>
+		</div>
+		<button class="orgs" onclick="orgs()">
+			ORGANIZATIONS
+		</button>
+		<button class="info" onclick="info()">
+			<ul>
+				<li onclick="selected = 'epilepsy'">Epilepsy</li>
+				<li onclick="selected = 'sensory'">Sensory overload</li>
+				<li onclick="selected = 'support'">Support groups</li>
+			</ul>
+			INFORMATION
+		</button>
+		<button class="about" onclick="about()">
+			About<br>us
+		</button>
+	</div>
+	<object data="Media/icon.svg" type="image/svg+xml"></object>
+	<div class="text">
+		<p>
+			Hi there! Welcome to PEW’s home page. Here you’ll find information on us, epilepsy, and other sensory disorders as well as cool and supportive organizations. 
+		</p>
+		<p>
+			But first, what is PEW? And who is it for? PEW is a browser extension with the intention of helping people with photosensitive epilepsy determine what content is and isn't safe to watch online. However, it’s also thought and made for anyone with a sensitivity for flashing lights, bright and vibrant colors, etc. Such as, anxiety, autism, migraines, ADHD, Tourettes, PTSD, and more.
+		</p>
+	</div>
+	<div class="socials">
+		<button>
+			<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimage.net%2Fwp-content%2Fuploads%2F2018%2F06%2Flogo-facebook-tondo-png-6.png&f=1&nofb=1" width="50px">
+			<i>@PEW</i>
+		</button>
+		<button onclick="window.open('https://www.instagram.com/photosensitive_warning/', '_blank')">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png" width="50px">
+			<i>@photosensitive_warning</i>
+		</button>
+	</div>
+	<div class="orgs-page">
+		<div class="orgs-top">
+			<button onclick="unorgs()">🠔</button>
+			<p>Here are some NGOs (Non-governmental organizations) we got in contact with (or that we just found helpful) while making <b>PEW</b>. They helped us get a better understanding of what we could do and implement in this project to make the best it can be and actually useful to people with epilepsy.</p>
+		</div>
+		<div class="orgs-links">
+			<button class="white left" style="background-color: #FC8E51;">
+				The Cameron Boyce Foundation
+				<div></div>
+			</button>
+			<button class="black left" style="background-color: #82E2AE;">
+				LACE
+				<div></div>
+			</button>
+			<button class="white right" style="background-color: #FFA4DA;">
+				American Epilepsy Society
+				<div></div>
+			</button>
+			<button class="black right" style="background-color: #788CF6;">
+				ABE
+				<div></div>
+			</button>
+			<button class="black left" style="background-color: #8CDAE4;">
+				ILAE
+				<div></div>
+			</button>
+			<button class="white left" style="background-color: #AE6EE0;">
+				Canadian Epilepsy Alliance
+				<div></div>
+			</button>
+			<button class="black right" style="background-color: #D73C3C;">
+				Purple Day
+				<div></div>
+			</button>
+			<button class="white right" style="background-color: #1E8D51;">
+				EPNS
+				<div></div>
+			</button>
+		</div>
+	</div>
+	<div class="info-page">
+		<div class="info-top">
+			<div class="info-top-bubble"></div>
+			<button onclick="uninfo()">🠔</button>
+		</div>
+		<div class="info-ep">
+			<p>Firstly, <i>what’s epilepsy?</i> Epilepsy is, in simple terms a brain disorder in which a person has repeated seizures over time. Seizures are episodes of uncontrolled and abnormal firing of brain cells that may cause changes in attention or behavior.</p>
+			<h2>Who does it affect? How?</h2>
+			<p></p>
+			<h2></h2>
+			<p></p>
+			<h2></h2>
+			<p></p>
+		</div>
+		<div class="info-se">
+			
+		</div>
+		<div class="info-su">
+			
+		</div>
+	</div>
+	<div class="about-page">
+		<div class="about-top">
+			<div class="about-top-thing">
+				<div class="person-photo caro">
+					<label>Carolina<br>Designer</label>
+					<img src="Media/caro.png" height="60px">
+					<div>Hey there! My name is Carolina Sepulvida Borges, I’m seventeen. I go by any pronouns. I’m graduating from ORT Belgrano, Argentina this year with a  technical baccalaureate with guidance in information and communication technologies</div>
+				</div>
+				<div class="who">
+					<h1>Who are we? <img src="Media/icon.svg" height="40px"></h1>
+					<p>Photosensitive Epilepsy<br>warning</p>
+				</div>
+				<div class="person-photo jere">
+					<img src="Media/jere.png" height="60px">
+					<label>Jeremías<br>Programmer</label>
+					<div>Hello, Jere here, Jeremias Sharovsky. I’m seventeen, eighteen this year. I go by they/them pronouns and I’m graduating from ORT Almagro, Argentina with a technical  baccalaureate with guidance in information and mechatronics.</div>
+				</div>
+			</div>
+			<button onclick="unabout()">🠔</button>
+		</div>
+		<div class="person-photo juani">
+			<img src="Media/juani.png" height="60px">
+			<label>Juan Ignacio<br>Project Manager</label>
+			<div>Hi! I’m Juan Ignacio Goñe. I’m seventeen. I go by he/him pronouns. I was the Proyect Manager on this proyect and a couple more this year.  And I’m graduating from ORT Belgrano, Argentina with a technical baccalaureate with guidance in information and communication technologies</div>
+		</div>
+		<div class="about-body">
+			<h2>Why we made PEW?</h2>
+			<p>The idea for PEW was born from a school project that we needed to do as part of our final year of school. We all wanted to do something that would benefit society in some way.</p>
+			<p>The only conditions that had to be met were: it had to be carried out throughout the school year and it had to be technology related. Almost halfway through the year we were given a talk about accessibility and other issues the school wanted us to aim for with our proyects. That's when we came up with this idea of creating software that would allow people with epilpsy to navigate the web safely and freely. We asked if there was something like this already and we disaappointed but not surprised when we were told that it hadn’t. That as when we decided we would do it ourselves.</p>
+			<br>
+			<p>You’re more than welcome to send us any feedback or maybe updates you’d like for us to implement. (Or anything really, we love cat pics)</p>
+			<br>
+			<p>
+				<a href="mailto:carosborges@gmail.com">carosborges@gmail.com</a>
+				<a href="mailto:jerescharovsky@gmail.com">jerescharovsky@gmail.com</a>
+				<a href="mailto:juanigonie@gmail.com">juanigonie@gmail.com</a>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="pew.js"></script>
+</html>

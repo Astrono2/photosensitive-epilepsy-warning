@@ -1,0 +1,493 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--light-pink);
+}
+
+button {
+	cursor: pointer;
+}
+
+object {
+	position: absolute;
+	width: 30%;
+	top: 25%;
+	left: 5%;
+}
+
+.top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title-bubble {
+	font-size: calc(min(0.75rem, 2vw));
+	font-family: nunito;
+	color: white;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--purple-dark);
+	border-bottom-right-radius: 100vw;
+	border-bottom-left-radius: 100vw;
+	border: none;
+	line-height: 1em;
+	width: calc(max(40em, 50%));
+}
+
+.title-bubble h1 {
+	font-size: calc(min(2rem, 5vw))
+	margin: 0;
+	margin-top: 0.5em;
+	padding: 0;
+}
+
+.title-bubble p {
+	width: 80%;
+	margin-top: 0;
+	padding-top: 0;
+	padding-bottom: 1em;
+}
+
+.orgs, .info {
+	font-family: nunito;
+	font-size: calc(min(2.5vw, 1.3rem));
+	border: none;
+	color: white;
+	padding: 1em;
+	border-bottom-left-radius: 2.5em;
+	border-bottom-right-radius: 2.5em;
+	width: 100%;
+	position: relative;
+}
+
+.orgs {
+	transform: translateY(-15px);
+	background-color: var(--org-color);
+}
+
+.info {
+	transform: translateY(calc(-8rem - 15px));
+	background-color: var(--info-color);
+	padding-left: 0;
+	padding-right: 0;
+	width: calc(100% + 2em);
+}
+
+.info:hover {
+	transform: translateY(-8rem);
+}
+
+.orgs:hover, .about:hover {
+	transform: translateY(0);
+}
+
+.info ul {
+	list-style: none;
+	height: 7rem;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.info ul li {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.2);
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.info ul li:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.info ul:last-child {
+	margin-bottom: 1rem;
+}
+
+.about {
+	transform: translateY(-10px);
+	font-family: nunito;
+	font-size: calc(min(2.5vw,1.5rem));
+	color: white;
+	background-color: var(--about-us);
+	border: none;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	padding: 1em;
+	margin-right: 2em;
+	border-bottom-left-radius: 2.5em;
+	border-bottom-right-radius: 2.5em;
+}
+
+.top button {
+	padding-top: 20px;
+	transition: transform 0.1s ease-in-out;
+	margin: 0.5em;
+	margin-top: 0;
+}
+
+.text {
+	position: absolute;
+	font-family: nunito;
+	text-align: justify;
+	top: 20%;
+	right: 10%;
+	width: 50%;
+	font-size: calc(min(1.5rem, 2.5vw));
+}
+
+.socials {
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.socials button {
+	background: none;
+	border: none;
+	position: relative;
+}
+
+.socials button i {
+	color: var(--purple-dark);
+	position: absolute;
+	height: 100%;
+	line-height: 50px;
+	left: 60px;
+	font-size: 1.1rem;
+}
+
+.socials button:hover i {
+	text-decoration: underline;
+}
+
+.orgs-page {
+	z-index: 500;
+	background-color: white;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform: translateY(-100%);
+	transition: transform 1s ease-in-out;
+}
+
+.orgs-top {
+	position: absolute;
+	height: 25%;
+	background-color: var(--org-color);
+	width: 100%;
+	border-bottom-left-radius: 5em;
+	border-bottom-right-radius: 5em;
+}
+
+.orgs-top p {
+	font-family: nunito;
+	margin-top: 2em;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.orgs-top b {
+	color: white;
+}
+
+.orgs-top button {
+	position: absolute;
+	font-size: 1.1rem;
+	top: 20px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	border: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	border-radius: 100%;
+	font-weight: bolder;
+	line-height: 100%;
+    text-indent: -0.25em;
+}
+
+.orgs-links {
+	position: absolute;
+	top: 40%;
+	bottom: 15%;
+	left: 5%;
+	right: 5%;
+	margin: 2em;
+	display: flex;
+	flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-around;
+}
+
+.orgs-links button {
+	font-family: nunito;
+	width: 15vw;
+	height: 15vw;
+	margin: 2vw;
+	border-radius: 100%;
+	border: none;
+	text-decoration: underline;
+	position: relative;
+}
+
+.orgs-links .black {
+	color: black;
+}
+
+.orgs-links .white {
+	color: white;
+}
+
+.orgs-links button div {
+	visibility: hidden;
+	color: inherit;
+	z-index: 20;
+	position: absolute;
+	width: 40vw;
+	height: 100%;
+	background-color: inherit;
+	display: flex;
+	align-items: center;
+	top: 0;
+	padding-left: 2em;
+	padding-right: 2em;
+	border-radius: 2em;
+}
+
+.orgs-links button:hover div {
+	visibility: visible;
+}
+
+.orgs-links button div::after {
+	content: '';
+	width: 20px;
+	height: 20px;
+	transform: rotate(45deg);
+	background-color: inherit;
+	position: absolute;
+}
+
+.orgs-links .left div {
+	left: 115%;
+}
+
+.orgs-links .left div::after {
+	left: -5px;
+}
+
+.orgs-links .right div {
+	right: 115%;
+}
+
+.orgs-links .right div::after {
+	right: -5px;
+}
+
+.info-page {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+.info-top button {
+	position: absolute;
+	font-size: 1.1rem;
+	top: 5px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	border: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	border-radius: 100%;
+	font-weight: bolder;
+	line-height: 100%;
+    text-indent: -0.25em;
+}
+
+.info-top-bubble {
+	position: absolute;
+	width: calc(max(10vw, 15rem));
+	height: calc(max(5vw, 7.5rem));
+	border-bottom-left-radius: 100vw;
+	border-bottom-right-radius: 100vw;
+	display: flex;
+    align-items: flex-start;
+    align-content: center;
+    font-family: 'Nunito';
+    font-size: 2rem;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.info-ep, .info-se, .info-su {
+	font-family: nunito;
+	margin-left: 1rem;
+	visibility: hidden;
+}
+
+.info-ep p:first-of-type,
+.info-se p:first-of-type,
+.info-su p:first-of-type {
+	margin-left: calc(max(10vw, 15rem));
+}
+
+.about-page {
+	font-family: nunito;
+	color: white;
+	background-color: #FCFEB3;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	transform: translateY(-100%);
+	transition: transform 1s ease-in-out;
+}
+
+.about-top button {
+	position: absolute;
+	font-size: 1.1rem;
+	top: 5px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	border: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	border-radius: 100%;
+	font-weight: bolder;
+	line-height: 100%;
+    text-indent: -0.25em;
+}
+
+.about-top-thing {
+	text-align: center;
+	text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 20%;
+	background-color: #FFCC4A;
+	border-bottom-left-radius: 100%;
+	border-bottom-right-radius: 100%;
+	display: flex;
+	flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.about-body {
+	position: absolute;
+	top: 20%;
+	color: black;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	text-align: justify;
+}
+
+.about-body p:first-of-type {
+	width: 40%;
+}
+
+.juani {
+	position: absolute;
+	top: 25%;
+	left: 45%;
+	text-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+	z-index: 20;
+}
+
+.who h1 {
+	margin-bottom: 0;
+	line-height: 1rem;
+}
+
+.who img {
+	transform: translateY(10px);
+}
+
+.person-photo {
+	display: flex;
+}
+
+.person-photo img {
+	border-radius: 100vw;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.person-photo div {
+	visibility: hidden;
+	position: absolute;
+	color: black;
+	text-shadow: none;
+	background-color: #FFFF54;
+	padding: 10px;
+	border-radius: 20px;
+	z-index: 25;
+	width: 40vw;
+	top: 80%;
+}
+
+.person-photo div::after {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	transform: rotate(45deg);
+	background-color: #FFFF54;
+	top: -10px;
+}
+
+.person-photo:hover div {
+	visibility: visible;
+}
+
+.juani div {
+	top: 120%;
+}
+
+.jere div {
+	right: 1em;
+}
+
+.caro div::after {
+	left: 20%;
+}
+
+.jere div::after {
+	right: 30%;
+}
+
+.juani div::after {
+	left: 5%;
+}
