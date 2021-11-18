@@ -5,7 +5,7 @@
 
 #include <analysis.h>
 
-#define LOG
+// #define LOG
 
 #ifdef LOG
 
@@ -150,16 +150,10 @@ uint8_t *get_message_frame(UChar32* msg, uint32_t msg_length, uint32_t frame_len
 			continue;
 		}
 
-		frame[j] = frame[j] << 4 & 0xf0;
+		// Read the frame in decimal because converting to hex in JS is slower
+		frame[j] *= 10;
 
-		if(msg[i] >= '0' && msg[i] <= '9')
-		{
-			frame[j] |= msg[i] - '0';
-		}
-		else if(msg[i] >= 'a' && msg[i] <= 'f')
-		{
-			frame[j] |= msg[i] - 'a' + 0xa;
-		}
+		frame[j] += msg[i] - '0';
 	}
 	
 	frame = realloc(frame, frame_length * sizeof(uint8_t));
