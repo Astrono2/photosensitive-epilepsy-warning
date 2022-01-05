@@ -29,18 +29,22 @@
 	</div>
 	<object data="Media/icon.svg" type="image/svg+xml"></object>
 	<div class="text">
+		<h2>Photosensitive Epilepsy Warning</h2>
 		<p>
-			Hi there! Welcome to PEW’s home page. Here you’ll find information on us, epilepsy, and other sensory disorders as well as cool and supportive organizations. 
+			PEW is a free browser extension designed for people with <i>photosensitive epilepsy</i>. We aim to provide them with the tools to be safe online.
 		</p>
 		<p>
-			But first, what is PEW? And who is it for? PEW is a browser extension with the intention of helping people with photosensitive epilepsy determine what content is and isn't safe to watch online. However, it’s also thought and made for anyone with a sensitivity for flashing lights, bright and vibrant colors, etc. Such as, anxiety, autism, migraines, ADHD, Tourettes, PTSD, and more.
+			The extension analyzes videos in web pages and detects seizure risks in them. This not only helps people with <i>photosensitive epilepsy</i>, but also other conditions sensitive to flashing and bright lights, such as anxiety, migraines, autism, ADHD, PTSD, and others.
+		</p>
+		<p>
+			PEW is still in development. It is an open source project. We invite you to check out our <a href="https://github.com/Astrono2/photosensitive-epilepsy-warning" style="color: var(--pew-primary-color);"><img src="Media/github.svg" style="width: 1em" /> GitHub</a>!
 		</p>
 	</div>
 	<div class="socials">
-		<button>
+		<!-- <button onclick="window.open('')">
 			<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimage.net%2Fwp-content%2Fuploads%2F2018%2F06%2Flogo-facebook-tondo-png-6.png&f=1&nofb=1" width="50px">
 			<i>@PEW</i>
-		</button>
+		</button> -->
 		<button onclick="window.open('https://www.instagram.com/photosensitive_warning/', '_blank')">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png" width="50px">
 			<i>@photosensitive_warning</i>
@@ -52,38 +56,46 @@
 			<p>Here are some NGOs (Non-governmental organizations) we got in contact with (or that we just found helpful) while making <b>PEW</b>. They helped us get a better understanding of what we could do and implement in this project to make the best it can be and actually useful to people with epilepsy.</p>
 		</div>
 		<div class="orgs-links">
-			<button class="white left" style="background-color: #FC8E51;">
-				The Cameron Boyce Foundation
-				<div></div>
-			</button>
-			<button class="black left" style="background-color: #82E2AE;">
-				LACE
-				<div></div>
-			</button>
-			<button class="white right" style="background-color: #FFA4DA;">
-				American Epilepsy Society
-				<div></div>
-			</button>
-			<button class="black right" style="background-color: #788CF6;">
-				ABE
-				<div></div>
-			</button>
-			<button class="black left" style="background-color: #8CDAE4;">
-				ILAE
-				<div></div>
-			</button>
-			<button class="white left" style="background-color: #AE6EE0;">
-				Canadian Epilepsy Alliance
-				<div></div>
-			</button>
-			<button class="black right" style="background-color: #D73C3C;">
-				Purple Day
-				<div></div>
-			</button>
-			<button class="white right" style="background-color: #1E8D51;">
-				EPNS
-				<div></div>
-			</button>
+			<a class="left" style="background-color: #1E8D51;" href="https://www.thecameronboycefoundation.org/">
+				<img src="Media/cameron_boyce.png" />
+				<label>The Cameron Boyce Foundation</label>
+				<div>The Cameron Boyce foundation honors the legacy of Cameron Boyce by aiming to cure epilepsy through funding research, education and awareness campaigns while still supporting causes that were important to Cameron.</div>
+			</a>
+			<a class="left" style="background-color: #33B4EB;" href="https://www.lace.org.ar/">
+				<img src="Media/lace.png" />
+				<label>LACE</label>
+				<div>The Liga Argentina Contra la Epilepsia (LACE) is an organization dedicated to spreading knowledge related to epilepsy in Argentina.</div>
+			</a>
+			<a class="right" style="background-color: #009CA7;" href="https://www.aesnet.org/">
+				<img src="Media/AES.png" />
+				<label>American Epilepsy Society</label>
+				<div>The American Epilepsy Society (AES) is a community of physicians dedicated to advancing knowledge and supporting evidence-based clinical practice to improve outcomes for persons with epilepsy and their families.</div>
+			</a>
+			<a class="right" style="background-color: #760283;" href="https://epilepsiabrasil.org.br/">
+				<img src="Media/ABE.png" />
+				<label>ABE</label>
+				<div>The Associação Brasileira de Epilepsia (ABE) is a non-profit society in Brazil, which established itself as an organization interested in spreading knowledge related to epilepsy and willing to improve of the quality of life of people with epilepsy.</div>
+			</a>
+			<a class="left" style="background-color: #B31F3C;" href="https://www.ilae.org/">
+				<img src="Media/ILAE.png" />
+				<label>ILAE</label>
+				<div>The International League Against Epilepsy (ILAE) is the World's preeminent association of health care professionals and scientists working toward a world where no person's life is limited by epilepsy.</div>
+			</a>
+			<a class="left" style="background-color: #AE6EE0;" href="http://epilepsymatters.com/">
+				<img src="Media/epilepsy_matters.png" />
+				<label>Epilepsy matters</label>
+				<div>Epilepsy Matters is  is an US-based public awareness group with a particular focus on epilepsy.</div>
+			</a>
+			<a class="right" style="background-color: #6E3D97;" href="https://www.purpleday.org/">
+				<img src="Media/purple_day.png" />
+				<label>Purple Day</label>
+				<div>Purple Day is an international grassroots effort dedicated to increasing awareness about epilepsy worldwide. On March 26th annually, people in countries around the world are invited to wear purple and host events in support of epilepsy awareness.</div>
+			</a>
+			<a class="right" style="background-color: #FC8E51;" href="https://www.epns.info/">
+				<img src="Media/EPNS.png" />
+				<label>EPNS</label>
+				<div>The European Paediatric Neurology Society (EPNS) is a society for physicians with a research or clinical interest in Paediatric Neurology.</div>
+			</a>
 		</div>
 	</div>
 	<div class="info-page">
@@ -93,18 +105,38 @@
 		</div>
 		<div class="info-ep">
 			<p>Firstly, <i>what’s epilepsy?</i> Epilepsy is, in simple terms a brain disorder in which a person has repeated seizures over time. Seizures are episodes of uncontrolled and abnormal firing of brain cells that may cause changes in attention or behavior.</p>
-			<h2>Who does it affect? How?</h2>
-			<p></p>
-			<h2></h2>
-			<p></p>
-			<h2></h2>
-			<p></p>
+			<h2>Photosensitive epilepsy</h2>
+			<p>Photosensitive epilepsy is when seizures are triggered by flashing lights or contrasting light and dark patterns. Photosensitive epilepsy is not common but it may be diagnosed when you have an EEG test. Flashing or patterned effects can make people with or without epilepsy feel disorientated, uncomfortable or unwell. This does not necessarily mean they have photosensitive epilepsy. This type of epilepsy is quite uncommon. Around 1 in 100 people has epilepsy and of these people, around 3% have photosensitive epilepsy.</p>
 		</div>
 		<div class="info-se">
-			
+			<p>PEW isn't just aimed for people with photosensitive epilepsy. Anyone sensitive to flashing lights can benefit from it.</p>
+			<h2>Sensory overload</h2>
+			<p>Sensory overload occurs when someone gets more input from their five senses at once than their brain can process. This can happen due to loud noises, strong smells, bright strobing/flashing lights and others.</p>
+
 		</div>
 		<div class="info-su">
-			
+			<p>Here are some support groups we found on social media. If you have some cool sugestions please let us know on our emails: <a href="mailto:carosborges@gmail.com">carosborges@gmail.com</a> and <a href="mailto:jerescharovsky@gmail.com">jerescharosvsky@gmail.com</a></p>
+			<div class="columns">
+				<p>
+					On <b>Facebook</b>:	
+					<ul>
+						<li>My Epilepsy Team</li>
+						<li>Epilepsy Awareness</li>
+						<li>Epilepsy Support Group</li>
+						<li>Epilepsy and seizure Disorder</li>
+					</ul>
+				</p>
+				<p>
+					On <b>Instagram</b>:
+					<ul>
+						<li>epilepsyyouarenotalone</li>
+						<li>epilepsy__awareness</li>
+						<li>lifewith_epilepsy</li>
+						<li>epilepsypositivity</li>
+						<li>artitswithepilepsy</li>
+					</ul>
+				</p>
+			</div>
 		</div>
 	</div>
 	<div class="about-page">
@@ -113,7 +145,7 @@
 				<div class="person-photo caro">
 					<label>Carolina<br>Designer</label>
 					<img src="Media/caro.png" height="60px">
-					<div>Hey there! My name is Carolina Sepulvida Borges, I’m seventeen. I go by any pronouns. I’m graduating from ORT Belgrano, Argentina this year with a  technical baccalaureate with guidance in information and communication technologies</div>
+					<div>Hey there! My name is Carolina Sepulvida Borges, I’m 18 years old. I go by any pronouns. I graduated from ORT Belgrano, Argentina this year with a technical baccalaureate with guidance in information and communication technologies</div>
 				</div>
 				<div class="who">
 					<h1>Who are we? <img src="Media/icon.svg" height="40px"></h1>
@@ -122,7 +154,7 @@
 				<div class="person-photo jere">
 					<img src="Media/jere.png" height="60px">
 					<label>Jeremías<br>Programmer</label>
-					<div>Hello, Jere here, Jeremias Sharovsky. I’m seventeen, eighteen this year. I go by they/them pronouns and I’m graduating from ORT Almagro, Argentina with a technical  baccalaureate with guidance in information and mechatronics.</div>
+					<div>Hi, I'm Jeremías Scharovsky, I’m 18 years old. I go by they/them pronouns and I graduated from ORT Almagro, Argentina with a technical baccalaureate with guidance in information and mechatronics.</div>
 				</div>
 			</div>
 			<button onclick="unabout()">🠔</button>
@@ -130,14 +162,14 @@
 		<div class="person-photo juani">
 			<img src="Media/juani.png" height="60px">
 			<label>Juan Ignacio<br>Project Manager</label>
-			<div>Hi! I’m Juan Ignacio Goñe. I’m seventeen. I go by he/him pronouns. I was the Proyect Manager on this proyect and a couple more this year.  And I’m graduating from ORT Belgrano, Argentina with a technical baccalaureate with guidance in information and communication technologies</div>
+			<div>Hi! I’m Juan Ignacio Goñe. I’m seventeen. I go by he/him pronouns. I was the Proyect Manager on this proyect and a couple more in 2021. I graduated from ORT Belgrano, Argentina with a technical baccalaureate with guidance in information and communication technologies</div>
 		</div>
 		<div class="about-body">
 			<h2>Why we made PEW?</h2>
-			<p>The idea for PEW was born from a school project that we needed to do as part of our final year of school. We all wanted to do something that would benefit society in some way.</p>
-			<p>The only conditions that had to be met were: it had to be carried out throughout the school year and it had to be technology related. Almost halfway through the year we were given a talk about accessibility and other issues the school wanted us to aim for with our proyects. That's when we came up with this idea of creating software that would allow people with epilpsy to navigate the web safely and freely. We asked if there was something like this already and we disaappointed but not surprised when we were told that it hadn’t. That as when we decided we would do it ourselves.</p>
+			<p>The idea for PEW was born from a school project that we needed to do as part of our final year of school (2021). We all wanted to do something that would benefit society in some way.</p>
+			<p>The only conditions that had to be met were: it had to be carried out throughout the school year and it had to be technology related. We were given a talk about accessibility and other issues the school wanted us to aim for with our proyects. That's when we came up with this idea of creating software that would allow people with photosensitive epilpsy to navigate the web safely and freely. We were disappointed, but not surprised, that such software didn't already exist, so we decided we would do it ourselves.</p>
 			<br>
-			<p>You’re more than welcome to send us any feedback or maybe updates you’d like for us to implement. (Or anything really, we love cat pics)</p>
+			<p>You’re more than welcome to send us any feedback or maybe updates you’d like us to implement. (Or anything really, we love cat pics)</p>
 			<br>
 			<p>
 				<a href="mailto:carosborges@gmail.com">carosborges@gmail.com</a>

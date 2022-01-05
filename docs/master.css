@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 
-body {
-	--purple-dark: #663993;
-	--light-pink: #ECD3FF;
-	--org-color: #3DAEE9;
-	--info-color: #F992DC;
-	--about-us: #FEEC4A;
+:root {
+	--pew-org-color: #3DAEE9;
+	--pew-info-color: #D74BAF;
+	--pew-info-sensory-bg: #D98315;
+	--pew-info-sensory: #FFC358;
+	--pew-info-support: #7DD185;
+	--pew-info-support-bg: #46863F;
+	--pew-about-us-color: #FEEC4A;
+	--pew-primary-color: #FFFF00;
+	--pew-primary-color-semi-dark: #EEEE00;
+	--pew-primary-color-dark: #AAAA00;
+	--pew-secondary-color: #663993;
+	--pew-secondary-color-dark: #440055;
+	--pew-darken-color: #00000066;
 }

@@ -5,17 +5,23 @@ html, body {
 body {
 	margin: 0;
 	padding: 0;
-	background-color: var(--light-pink);
+	background-color: var(--pew-secondary-color-dark);
+	color: white;
 }
 
 button {
 	cursor: pointer;
 }
 
+::selection {
+	background-color: var(--pew-primary-color);
+	color: black;
+}
+
 object {
-	position: absolute;
+	position: fixed;
 	width: 30%;
-	top: 25%;
+	top: 15%;
 	left: 5%;
 }
 
@@ -34,12 +40,12 @@ object {
 .title-bubble {
 	font-size: calc(min(0.75rem, 2vw));
 	font-family: nunito;
-	color: white;
+	color: var(--pew-primary-color);
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background-color: var(--purple-dark);
+	background-color: var(--pew-secondary-color);
 	border-bottom-right-radius: 100vw;
 	border-bottom-left-radius: 100vw;
 	border: none;
@@ -75,12 +81,12 @@ object {
 
 .orgs {
 	transform: translateY(-15px);
-	background-color: var(--org-color);
+	background-color: var(--pew-org-color);
 }
 
 .info {
 	transform: translateY(calc(-8rem - 15px));
-	background-color: var(--info-color);
+	background-color: var(--pew-info-color);
 	padding-left: 0;
 	padding-right: 0;
 	width: calc(100% + 2em);
@@ -128,7 +134,7 @@ object {
 	font-family: nunito;
 	font-size: calc(min(2.5vw,1.5rem));
 	color: white;
-	background-color: var(--about-us);
+	background-color: var(--pew-about-us-color);
 	border: none;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 	padding: 1em;
@@ -148,14 +154,14 @@ object {
 	position: absolute;
 	font-family: nunito;
 	text-align: justify;
-	top: 20%;
+	top: 10%;
 	right: 10%;
 	width: 50%;
 	font-size: calc(min(1.5rem, 2.5vw));
 }
 
 .socials {
-	position: absolute;
+	position: fixed;
 	left: 5px;
 	bottom: 5px;
 	display: flex;
@@ -170,12 +176,12 @@ object {
 }
 
 .socials button i {
-	color: var(--purple-dark);
+	color: var(--pew-primary-color);
 	position: absolute;
 	height: 100%;
 	line-height: 50px;
 	left: 60px;
-	font-size: 1.1rem;
+	font-size: 1.1em;
 }
 
 .socials button:hover i {
@@ -183,19 +189,21 @@ object {
 }
 
 .orgs-page {
+	visibility: hidden;
 	z-index: 500;
-	background-color: white;
+	background-color: var(--pew-secondary-color-dark);
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	transform: translateY(-100%);
 	transition: transform 1s ease-in-out;
+	font-size: calc(min(1rem, 2.5vw));
 }
 
 .orgs-top {
 	position: absolute;
 	height: 25%;
-	background-color: var(--org-color);
+	background-color: var(--pew-org-color);
 	width: 100%;
 	border-bottom-left-radius: 5em;
 	border-bottom-right-radius: 5em;
@@ -203,7 +211,6 @@ object {
 
 .orgs-top p {
 	font-family: nunito;
-	margin-top: 2em;
 	margin-left: 2em;
 	margin-right: 2em;
 }
@@ -242,26 +249,40 @@ object {
     align-content: space-around;
 }
 
-.orgs-links button {
+.orgs-links a {
 	font-family: nunito;
-	width: 15vw;
-	height: 15vw;
+	width: 14vw;
+	height: 14vw;
 	margin: 2vw;
 	border-radius: 100%;
 	border: none;
-	text-decoration: underline;
 	position: relative;
+	font-size: inherit;
+	cursor: pointer;
 }
 
-.orgs-links .black {
-	color: black;
+.orgs-links a img {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+	border-radius: 100%;
 }
 
-.orgs-links .white {
+.orgs-links a label {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
 	color: white;
+	font-size: 0.75em;
+	text-decoration: underline;
+	cursor: pointer;
+	text-align: center;
 }
 
-.orgs-links button div {
+.orgs-links a div {
 	visibility: hidden;
 	color: inherit;
 	z-index: 20;
@@ -275,13 +296,14 @@ object {
 	padding-left: 2em;
 	padding-right: 2em;
 	border-radius: 2em;
+	color: white;
 }
 
-.orgs-links button:hover div {
+.orgs-links-enabled a:hover div {
 	visibility: visible;
 }
 
-.orgs-links button div::after {
+.orgs-links-enabled a div::after {
 	content: '';
 	width: 20px;
 	height: 20px;
@@ -309,10 +331,11 @@ object {
 .info-page {
 	position: absolute;
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 	visibility: hidden;
 	opacity: 0;
 	transition: opacity 0.5s;
+	background-color: var(--pew-secondary-color-dark);
 }
 
 .info-top button {
@@ -349,7 +372,12 @@ object {
 
 .info-ep, .info-se, .info-su {
 	font-family: nunito;
-	margin-left: 1rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
+	margin-top: 2em;
+	top: 0;
+	left: 0;
+	position: absolute;
 	visibility: hidden;
 }
 
@@ -359,10 +387,34 @@ object {
 	margin-left: calc(max(10vw, 15rem));
 }
 
+.info-ep p,
+.info-se p,
+.info-su p {
+	max-width: 60%;
+}
+
+.info-ep h2:first-of-type,
+.info-se h2:first-of-type,
+.info-su h2:first-of-type {
+	margin-top: 2em;
+}
+
+.info-su .columns {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	position: absolute;
+	top: 100%;
+	left: -10%;
+	right: 25%;
+}
+
 .about-page {
+	visibility: hidden;
 	font-family: nunito;
 	color: white;
-	background-color: #FCFEB3;
+	background-color: var(--pew-info-sensory-bg);
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -395,7 +447,7 @@ object {
 	left: 0;
 	right: 0;
 	height: 20%;
-	background-color: #FFCC4A;
+	background-color: var(--pew-info-sensory);
 	border-bottom-left-radius: 100%;
 	border-bottom-right-radius: 100%;
 	display: flex;
@@ -408,10 +460,14 @@ object {
 .about-body {
 	position: absolute;
 	top: 20%;
-	color: black;
+	color: white;
 	margin-left: 1rem;
 	margin-right: 1rem;
 	text-align: justify;
+}
+
+.about-body a {
+	color: var(--pew-secondary-color);
 }
 
 .about-body p:first-of-type {
@@ -458,7 +514,13 @@ object {
 	top: 80%;
 }
 
+.person-photo div::selection {
+	color: var(--pew-primary-color);
+	background-color: var(--pew-secondary-color);
+}
+
 .person-photo div::after {
+	z-index: -1;
 	content: '';
 	position: absolute;
 	width: 20px;
