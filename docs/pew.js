@@ -188,7 +188,7 @@ function addState(state) {
     let stateObj = { id: "100" };
       
     window.history.pushState(stateObj,
-             state, "/index.html" + state);
+             state, window.location.pathname + state);
 }
 
 document.onmousemove = (event) => {
