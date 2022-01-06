@@ -8,6 +8,7 @@ export class PewVideo {
 
 	analysisPortUid; // Int
 	analysisCanvas; // Canvas
+	analysisCanvasCtx; // Canvas context
 
 	isCrossOrigin; // Boolean
 
@@ -26,9 +27,10 @@ export class PewVideo {
 		this.analysisCanvas = document.createElement('canvas');
 		this.analysisCanvas.width = video.videoWidth;
 		this.analysisCanvas.height = video.videoHeight;
+		this.analysisCanvasCtx = this.analysisCanvas.getContext('2d');
 
-		// Just in case
-		this.isSafe = false;
+		// If it's true or false it means it has been analyzed
+		this.isSafe = undefined;
 
 		this.isAnalyzing = false;
 
@@ -36,6 +38,9 @@ export class PewVideo {
 	}
 
 	static checkCrossOrigin(video) {
+		// If the video source begins with a fowardslash, it's a relative url and not cross-origin
+		if(video.src[0] === '/') return false;
+
 		let videoUrl = new URL(video.src);
 		let docUrl = new URL(document.URL);
 		// Videos with file:// origin count as cross origin
@@ -175,6 +180,7 @@ export class PewVideo {
 	}
 
 	startAnalysis() {
+		if (this.isSafe !== undefined) return
 		chrome.runtime.sendMessage({action: 'get_native_port'}, (uid) => {
 			this.analysisPortUid = uid;
 
@@ -212,13 +218,9 @@ export class PewVideo {
 
 	sendFrame() {
 		let video = this.video;
-		let ctx = this.analysisCanvas.getContext('2d');
+		let ctx = this.analysisCanvasCtx;
 		ctx.drawImage(video, 0, 0);
 		let frame = ctx.getImageData(0,0,video.videoWidth,video.videoHeight).data;
-		frame = Array.from(frame);
-		// VERY SLOW
-		// TODO: put in worker and optimize
-		frame.forEach((elem, idx, arr) => {arr[idx] = elem.toString(16)});
 		chrome.runtime.sendMessage({
 			action: 'send_native_message',
 			uid: this.analysisPortUid,
@@ -229,6 +231,7 @@ export class PewVideo {
 
 	onMessage(message) {
 		if(!this.isAnalyzing) return;
+		if(this.isSafe !== undefined) return;
 		if(message === 2) {
 			if(this.video.currentTime < this.video.duration) {
 				this.sendFrame();

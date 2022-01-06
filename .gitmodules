@@ -1,3 +1,3 @@
 [submodule "Analysis/pete"]
 	path = Analysis/pete
-	url = https://pete-video-analysis/core
+	url = https://github.com/pete-video-analysis/core
