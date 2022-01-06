@@ -1,3 +1,4 @@
 [submodule "Analysis/pete"]
 	path = Analysis/pete
 	url = https://github.com/pete-video-analysis/core
+	branch = stable

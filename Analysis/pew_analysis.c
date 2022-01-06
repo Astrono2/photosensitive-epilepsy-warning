@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <analysis.h>
+#include <pete.h>
 
 // #define LOG
 
@@ -14,11 +14,13 @@ UFILE *log_file;
 
 #endif
 
+PETE_CTX *ctx;
+
 uint32_t receive_message(UChar32** msg);
 uint8_t *get_message_frame(UChar32* msg, uint32_t msg_length, uint32_t frame_length);
 void message_to_metadata(UChar32* msg, uint32_t msg_length);
 
-void notify_unsafe(uint64_t _start, uint64_t _end, uint16_t _x, uint16_t _y, bool _is_red);
+void notify_unsafe(int _start, int _end, int _x, int _y, PETE_CTX *_ctx);
 void request_next_frame();
 
 uint64_t buffer_size = 0;
@@ -42,9 +44,6 @@ int main(int argc, char const *argv[])
 	free(msg);
 	fflush(stdin);
 
-	buffer_size = video->width * video->height;
-	buffer_size *= video->has_alpha ? 4 : 3;
-
 	for(;;)
 	{
 		UChar32 *msg;
@@ -56,7 +55,7 @@ int main(int argc, char const *argv[])
 		uint8_t *frame = get_message_frame(msg, msg_length, buffer_size);
 		free(msg);
 
-		pete_receive_frame(frame);
+		pete_receive_frame(frame, ctx);
 		free(frame);
 
 		request_next_frame();
@@ -68,13 +67,14 @@ int main(int argc, char const *argv[])
 	u_fflush(log_file);
 	u_fclose(log_file);
 #endif
+	pete_free_ctx(ctx);
 
 	return 0;
 }
 
 /*------------------------------------------------------------------------------------------*/
 
-void notify_unsafe(uint64_t _start, uint64_t _end, uint16_t _x, uint16_t _y, bool _is_red)
+void notify_unsafe(int _start, int _end, int _x, int _y, PETE_CTX *_ctx)
 {
 	putchar(0x01);
 	putchar(0x00);
@@ -219,7 +219,10 @@ void message_to_metadata(UChar32* msg, uint32_t msg_length)
 	++i; // Skip comma
 	has_alpha = (msg[i] == 't');
 
-	pete_set_metadata(width, height, fps, has_alpha);
+	ctx = pete_create_context(width, height, fps, has_alpha);
+
+	buffer_size = width * height;
+	buffer_size *= has_alpha ? 4 : 3;
 
 #ifdef LOG
 	u_fprintf(log_file, "w: %d, h: %d, f: %d, a: %d\n", video->width, video->height, fps, video->has_alpha);
