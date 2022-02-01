@@ -196,11 +196,11 @@ document.onmousemove = (event) => {
 		return;
 	}
 
-	let eye = document.querySelector('object').getSVGDocument().getElementById('path833');
+	let eye = document.querySelector('object').contentDocument.getElementById('path833');
 	let iconBB = document.querySelector('object').getBoundingClientRect();
 	let eyeBB = eye.getBBox();
 	let [eyeX, eyeY] = [eyeBB.x + iconBB.x + eyeBB.width / 2, eyeBB.y + iconBB.y + eyeBB.height /2];
-	let [x, y] = [event.screenX - eyeX - window.screen.left, event.screenY - window.screen.top - eyeY];
+	let [x, y] = [event.screenX - eyeX - window.screenLeft, event.screenY - window.screenTop - eyeY];
 	let l = Math.sqrt(x * x + y * y);
 	x = x / (Math.log(l) * 20);
 	y = y / (Math.log(l) * 20);
@@ -248,7 +248,7 @@ window.onload = () => {
 			about();
 			break;
 	}
-	document.querySelector('object').getSVGDocument().onmousemove = document.onmousemove;
+	document.querySelector('object').contentDocument.onmousemove = document.onmousemove;
 }
 
 window.onpopstate = window.onload;
